@@ -14,9 +14,15 @@ struct PersistenceController {
     static let preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+        for i in 0..<4 {
+            let newRecipe = RecipeEntity(context: viewContext)
+            newRecipe.id = UUID()
+            newRecipe.name = ["番茄炒蛋", "青椒肉丝", "蒜蓉西兰花", "蛋炒饭"][i]
+            newRecipe.difficulty = "中等"
+            newRecipe.timestamp = Date()
+            newRecipe.colorIndex = Int16(i % 5)
+            newRecipe.cookTime = "20分钟"
+            newRecipe.desc = "制作步骤..."
         }
         do {
             try viewContext.save()
