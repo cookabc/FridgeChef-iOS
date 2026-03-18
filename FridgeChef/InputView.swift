@@ -116,7 +116,7 @@ struct InputView: View {
     private func generateRecipe() {
         // 收集所有食材
         var allIngredients: [String] = Array(selectedIngredients)
-        
+
         // 处理自定义输入的食材
         if !customIngredients.isEmpty {
             let customItems = customIngredients.components(separatedBy: ",")
@@ -124,32 +124,29 @@ struct InputView: View {
                 .filter { !$0.isEmpty }
             allIngredients.append(contentsOf: customItems)
         }
-        
+
         // 检查是否有食材
         if allIngredients.isEmpty {
             errorMessage = "请至少选择一种食材"
             return
         }
-        
+
         // 开始加载
         isLoading = true
         errorMessage = nil
-        
+
         // 调用 API 生成食谱
         let apiService = APIService()
-        apiService.generateRecipe(ingredients: allIngredients) { result in
-            DispatchQueue.main.async {
-                isLoading = false
-                
-                switch result {
-                case .success(let recipe):
-                    generatedRecipe = recipe
-                    currentView = "result"
-                case .failure(let error):
-                    errorMessage = "生成食谱失败，请重试"
-                    print("Error generating recipe: \(error)")
-                }
+        Task {
+            do {
+                let recipe = try await apiService.generateRecipe(ingredients: allIngredients)
+                generatedRecipe = recipe
+                currentView = "result"
+            } catch {
+                errorMessage = "生成食谱失败，请重试"
+                print("Error generating recipe: \(error)")
             }
+            isLoading = false
         }
     }
 }
