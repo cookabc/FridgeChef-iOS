@@ -10,20 +10,16 @@ public extension Color {
 struct NeoPopStyle: ViewModifier {
     let backgroundColor: Color
     let cornerRadius: CGFloat
-    let borderWidth: CGFloat = 4
-    let shadowOffset: CGFloat = 6
     
     func body(content: Content) -> some View {
         content
-            .background(
-                ZStack {
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .fill(backgroundColor)
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .stroke(Color.black, lineWidth: borderWidth)
-                }
+            .background(backgroundColor)
+            .cornerRadius(cornerRadius)
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .stroke(Color.black, lineWidth: 4)
             )
-            .shadow(color: Color.black, radius: 0, x: shadowOffset, y: shadowOffset)
+            .shadow(color: Color.black, radius: 0, x: 6, y: 6)
     }
 }
 
