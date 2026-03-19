@@ -190,41 +190,52 @@ struct ResultView: View {
                     
                     // 操作按钮
                     HStack(spacing: 16) {
+                        // 重新生成按钮
                         Button(action: {
                             // 重新生成
                         }) {
-                            Text("🔄 重新生成")
-                                .font(.title3)
-                                .fontWeight(.black)
-                                .foregroundColor(.black)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color.black)
+                                    .offset(x: 6, y: 6)
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color.white)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .stroke(Color.black, lineWidth: 4)
+                                    )
+                                Text("🔄 重新生成")
+                                    .font(.title3)
+                                    .fontWeight(.black)
+                                    .foregroundColor(.black)
+                            }
+                            .frame(height: 56)
                         }
-                        .frame(height: 56)
                         .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(9999)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 9999)
-                                .stroke(Color.black, lineWidth: 4)
-                        )
-                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                         
+                        // 保存按钮
                         Button(action: {
                             saveRecipe()
                         }) {
-                            Text(isSaved ? "✅ 已保存" : "💾 保存食谱")
-                                .font(.title3)
-                                .fontWeight(.black)
-                                .foregroundColor(.black)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color.black)
+                                    .offset(x: 6, y: 6)
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .stroke(Color.black, lineWidth: 4)
+                                    )
+                                Text(isSaved ? "✅ 已保存" : "💾 保存食谱")
+                                    .font(.title3)
+                                    .fontWeight(.black)
+                                    .foregroundColor(.black)
+                            }
+                            .frame(height: 56)
                         }
-                        .frame(height: 56)
                         .frame(maxWidth: .infinity)
-                        .background(Color(red: 0.8, green: 1.0, blue: 0.0))
-                        .cornerRadius(9999)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 9999)
-                                .stroke(Color.black, lineWidth: 4)
-                        )
-                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                        .disabled(isSaved)
                     }
                     .padding(.horizontal, 16)
                     .padding(.bottom, 24)
