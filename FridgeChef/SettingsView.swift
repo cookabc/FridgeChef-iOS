@@ -131,6 +131,7 @@ struct SettingsView: View {
                                 }
                             }
                             .padding()
+                            .padding(.bottom)
                         }
                         .padding(.horizontal, 16)
                         
