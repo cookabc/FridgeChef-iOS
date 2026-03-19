@@ -30,14 +30,12 @@ struct HomeView: View {
                     Button(action: { currentView = "settings" })
                     {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 9999)
-                                .fill(Color.white)
-                                .frame(width: 48, height: 48)
-                                .neoPopStyle(backgroundColor: .white, cornerRadius: 9999)
                             Image(systemName: "gear")
                                 .font(.system(size: 20))
                                 .foregroundColor(.black)
                         }
+                        .frame(width: 48, height: 48)
+                        .neoPopStyle(backgroundColor: .white, cornerRadius: 9999)
                     }
                 }
                 .padding()
