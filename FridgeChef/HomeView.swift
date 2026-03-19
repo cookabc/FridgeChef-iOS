@@ -49,35 +49,40 @@ struct HomeView: View {
                             .fill(Color.acidGreen)
                             .frame(height: 180)
                             .neoPopStyle(backgroundColor: .acidGreen, cornerRadius: 24)
-                        HStack {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("今天吃什么？")
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.black)
-                                Text("开始烹饪")
-                                    .font(.title)
-                                    .fontWeight(.black)
-                                    .foregroundColor(.black)
-                                Text("输入冰箱里的食材，AI 帮你生成食谱")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.black.opacity(0.8))
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack(alignment: .center) {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("今天吃什么？")
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.black)
+                                    Text("开始烹饪")
+                                        .font(.title)
+                                        .fontWeight(.black)
+                                        .foregroundColor(.black)
+                                }
+                                
+                                Spacer()
+                                
+                                // 加号按钮
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.black)
+                                        .frame(width: 64, height: 64)
+                                    Image(systemName: "plus")
+                                        .font(.system(size: 36))
+                                        .foregroundColor(.acidGreen)
+                                }
+                                .padding(.leading, 16)
                             }
-                            .padding()
-                            .flexibleFrame()
+                            .padding(.bottom, 8)
                             
-                            // 加号按钮
-                            ZStack {
-                                Circle()
-                                    .fill(Color.black)
-                                    .frame(width: 60, height: 60)
-                                Image(systemName: "plus")
-                                    .font(.system(size: 28))
-                                    .foregroundColor(.acidGreen)
-                            }
-                            .padding()
+                            Text("输入冰箱里的食材，AI 帮你生成食谱")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.black.opacity(0.9))
                         }
+                        .padding(.horizontal, 36)
                     }
                 }
                 .padding(.horizontal, 16)
