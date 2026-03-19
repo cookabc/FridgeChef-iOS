@@ -17,11 +17,11 @@ struct HomeView: View {
                 // 顶部标题和设置按钮
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("冰箱大厨")
+                        Text("home.title".localized)
                             .font(.largeTitle)
                             .fontWeight(.black)
                             .foregroundColor(.white)
-                        Text("FridgeChef")
+                        Text("home.subtitle".localized)
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
@@ -71,11 +71,11 @@ struct HomeView: View {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack(alignment: .center) {
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text("今天吃什么？")
+                                    Text("home.today.what".localized)
                                         .font(.headline)
                                         .fontWeight(.bold)
                                         .foregroundColor(.black)
-                                    Text("开始烹饪")
+                                    Text("home.start.cooking".localized)
                                         .font(.title)
                                         .fontWeight(.black)
                                         .foregroundColor(.black)
@@ -96,7 +96,7 @@ struct HomeView: View {
                             }
                             .padding(.bottom, 8)
                             
-                            Text("输入冰箱里的食材，AI 帮你生成食谱")
+                            Text("home.input.prompt".localized)
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.black.opacity(0.9))
@@ -122,7 +122,7 @@ struct HomeView: View {
                                     .stroke(Color.black, lineWidth: 4)
                             )
                         VStack {
-                            Text("已生成食谱")
+                            Text("home.generated.recipes".localized)
                                 .font(.caption)
                                 .fontWeight(.bold)
                                 .foregroundColor(.gray)
@@ -147,7 +147,7 @@ struct HomeView: View {
                                     .stroke(Color.black, lineWidth: 4)
                             )
                         VStack {
-                            Text("节省食材")
+                            Text("home.saved.ingredients".localized)
                                 .font(.caption)
                                 .fontWeight(.bold)
                                 .foregroundColor(.gray)
@@ -165,14 +165,14 @@ struct HomeView: View {
                 
                 // 历史记录标题
                 HStack {
-                    Text("历史记录")
+                    Text("home.history".localized)
                         .font(.headline)
                         .fontWeight(.black)
                         .foregroundColor(.white)
                     Spacer()
                     Button(action: {})
                     {
-                        Text("查看全部")
+                        Text("home.view.all".localized)
                             .font(.subheadline)
                             .fontWeight(.bold)
                             .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
@@ -285,11 +285,11 @@ struct HomeView: View {
                                 .font(.system(size: 60))
                                 .foregroundColor(.gray)
                                 .padding(.bottom, 16)
-                            Text("还没有历史食谱")
+                            Text("home.no.recipes".localized)
                                 .font(.headline)
                                 .fontWeight(.bold)
                                 .foregroundColor(.black)
-                            Text("开始烹饪，生成你的第一份食谱吧！")
+                            Text("home.no.recipes.prompt".localized)
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                                 .padding(.top, 8)

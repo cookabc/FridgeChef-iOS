@@ -1,0 +1,71 @@
+/* 
+  Localizable.strings
+  FridgeChef
+  
+  English localization
+*/
+
+// MARK: - App
+"app.name" = "FridgeChef";
+"app.subtitle" = "Your AI Cooking Assistant";
+
+// MARK: - Home View
+"home.title" = "FridgeChef";
+"home.subtitle" = "Your AI Cooking Assistant";
+"home.today.what" = "What to cook today?";
+"home.start.cooking" = "Start Cooking";
+"home.input.prompt" = "Enter ingredients from your fridge, AI will generate recipes for you";
+"home.generated.recipes" = "Recipes Generated";
+"home.saved.ingredients" = "Ingredients Saved";
+"home.history" = "History";
+"home.view.all" = "View All";
+"home.no.recipes" = "No recipes yet";
+"home.no.recipes.prompt" = "Start cooking and generate your first recipe!";
+
+// MARK: - Input View
+"input.title" = "Enter Ingredients";
+"input.subtitle" = "Tell AI what you have";
+"input.fridge.question" = "What's in your fridge?";
+"input.placeholder" = "Enter ingredients, separated by commas...";
+"input.example" = "e.g.: eggs, tomato, onion, pepper";
+"input.quick.select" = "Quick Select";
+"input.selected" = "Selected:";
+"input.generate" = "✨ Generate Recipe";
+"input.error.empty" = "Please select at least one ingredient";
+"input.error.failed" = "Failed to generate recipe, please try again";
+
+// MARK: - Result View
+"result.title" = "Recipe Details";
+"result.subtitle" = "AI Generated Recipe";
+"result.difficulty.easy" = "Easy";
+"result.difficulty.medium" = "Medium";
+"result.difficulty.hard" = "Hard";
+"result.time.minutes" = "%d min";
+"result.ingredients" = "🥬 Ingredients";
+"result.ingredients.you.have" = "✓ You have";
+"result.steps" = "👨‍🍳 Steps";
+"result.step.number" = "Step %d";
+"result.regenerate" = "🔄 Regenerate";
+"result.save" = "💾 Save Recipe";
+"result.saved" = "✅ Saved";
+"result.save.error" = "Save failed";
+
+// MARK: - Settings View
+"settings.title" = "API Settings";
+"settings.subtitle" = "Configure your AI service";
+"settings.base.url" = "Base URL";
+"settings.model" = "Model";
+"settings.api.key" = "API Key";
+"settings.placeholder.url" = "https://api-inference.modelscope.cn/v1";
+"settings.placeholder.model" = "MiniMax/MiniMax-M2.5";
+"settings.placeholder.key" = "Enter API Key";
+"settings.save" = "Save Settings";
+"settings.save.success" = "Settings saved successfully!";
+
+// MARK: - Common
+"common.back" = "Back";
+"common.home" = "Home";
+"common.settings" = "Settings";
+"common.cancel" = "Cancel";
+"common.done" = "Done";
+"common.loading" = "Loading...";

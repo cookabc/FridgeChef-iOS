@@ -1,0 +1,71 @@
+/* 
+  Localizable.strings
+  FridgeChef
+  
+  Chinese (Simplified) localization
+*/
+
+// MARK: - App
+"app.name" = "冰箱大厨";
+"app.subtitle" = "FridgeChef";
+
+// MARK: - Home View
+"home.title" = "冰箱大厨";
+"home.subtitle" = "FridgeChef";
+"home.today.what" = "今天吃什么？";
+"home.start.cooking" = "开始烹饪";
+"home.input.prompt" = "输入冰箱里的食材，AI 帮你生成食谱";
+"home.generated.recipes" = "已生成食谱";
+"home.saved.ingredients" = "节省食材";
+"home.history" = "历史记录";
+"home.view.all" = "查看全部";
+"home.no.recipes" = "还没有历史食谱";
+"home.no.recipes.prompt" = "开始烹饪，生成你的第一份食谱吧！";
+
+// MARK: - Input View
+"input.title" = "输入食材";
+"input.subtitle" = "告诉 AI 你有什么";
+"input.fridge.question" = "冰箱里有什么？";
+"input.placeholder" = "输入食材，用逗号分隔...";
+"input.example" = "例如：鸡蛋, 番茄, 洋葱, 青椒";
+"input.quick.select" = "快速选择";
+"input.selected" = "已选择:";
+"input.generate" = "✨ 生成食谱";
+"input.error.empty" = "请至少选择一种食材";
+"input.error.failed" = "生成食谱失败，请重试";
+
+// MARK: - Result View
+"result.title" = "食谱详情";
+"result.subtitle" = "AI 为你生成的食谱";
+"result.difficulty.easy" = "简单";
+"result.difficulty.medium" = "中等";
+"result.difficulty.hard" = "困难";
+"result.time.minutes" = "%d 分钟";
+"result.ingredients" = "🥬 所需食材";
+"result.ingredients.you.have" = "✓ 你有";
+"result.steps" = "👨‍🍳 制作步骤";
+"result.step.number" = "第 %d 步";
+"result.regenerate" = "🔄 重新生成";
+"result.save" = "💾 保存食谱";
+"result.saved" = "✅ 已保存";
+"result.save.error" = "保存失败";
+
+// MARK: - Settings View
+"settings.title" = "API 配置";
+"settings.subtitle" = "配置你的 AI 服务";
+"settings.base.url" = "Base URL";
+"settings.model" = "Model";
+"settings.api.key" = "API Key";
+"settings.placeholder.url" = "https://api-inference.modelscope.cn/v1";
+"settings.placeholder.model" = "MiniMax/MiniMax-M2.5";
+"settings.placeholder.key" = "输入 API Key";
+"settings.save" = "保存配置";
+"settings.save.success" = "配置保存成功！";
+
+// MARK: - Common
+"common.back" = "返回";
+"common.home" = "首页";
+"common.settings" = "设置";
+"common.cancel" = "取消";
+"common.done" = "完成";
+"common.loading" = "加载中...";
