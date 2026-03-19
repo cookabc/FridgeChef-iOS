@@ -20,17 +20,21 @@ struct InputView: View {
                 HStack {
                     Button(action: { currentView = "home" })
                     {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 20))
-                            .foregroundColor(.black)
-                            .frame(width: 48, height: 48)
-                            .background(Color.white)
-                            .cornerRadius(9999)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .stroke(Color.black, lineWidth: 4)
-                            )
-                            .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 9999)
+                                .fill(Color.black)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 9999)
+                                .fill(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 9999)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 20))
+                                .foregroundColor(.black)
+                        }
+                        .frame(width: 48, height: 48)
                     }
                     VStack(alignment: .leading) {
                         Text("输入食材")
@@ -49,120 +53,146 @@ struct InputView: View {
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 16) {
-                        // 食材输入框
-                        VStack(alignment: .leading) {
-                            Text("冰箱里有什么？")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .padding(.bottom, 8)
-                                .foregroundColor(.black)
-                            
-                            TextField("输入食材，用逗号分隔...", text: $customIngredients)
-                                .padding()
-                                .background(Color.white)
-                                .cornerRadius(9999)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9999)
-                                        .stroke(Color.black, lineWidth: 3)
-                                )
-                                .shadow(color: Color.black, radius: 0, x: 6, y: 6)
-                                .padding(.bottom, 8)
-                            
-                            Text("例如：鸡蛋, 番茄, 洋葱, 青椒")
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.gray)
-                        }
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(24)
-                        .overlay(
+                        // 食材输入框卡片
+                        ZStack {
                             RoundedRectangle(cornerRadius: 24)
-                                .stroke(Color.black, lineWidth: 4)
-                        )
-                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                                .fill(Color.black)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
+                            
+                            VStack(alignment: .leading) {
+                                Text("冰箱里有什么？")
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                    .padding(.bottom, 8)
+                                    .foregroundColor(.black)
+                                
+                                // 输入框
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 9999)
+                                        .fill(Color.black)
+                                        .offset(x: 4, y: 4)
+                                    RoundedRectangle(cornerRadius: 9999)
+                                        .fill(Color.white)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 9999)
+                                                .stroke(Color.black, lineWidth: 3)
+                                        )
+                                    TextField("输入食材，用逗号分隔...", text: $customIngredients)
+                                        .padding()
+                                }
+                                .frame(height: 48)
+                                .padding(.bottom, 8)
+                                
+                                Text("例如：鸡蛋, 番茄, 洋葱, 青椒")
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding()
+                        }
                         .padding(.horizontal, 16)
                         
-                        // 常用食材标签
-                        VStack(alignment: .leading) {
-                            Text("快速选择")
-                                .font(.headline)
-                                .fontWeight(.black)
-                                .padding(.bottom, 12)
-                                .foregroundColor(.black)
+                        // 常用食材标签卡片
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.black)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
                             
-                            let emojis = ["🥚", "🍅", "🧅", "🫑", "🥩", "🍗", "🍚", "🍜"]
-                            let ingredientsWithEmojis = Array(zip(commonIngredients, emojis))
-                            
-                            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                                ForEach(ingredientsWithEmojis, id: \.0) {
-                                    ingredient, emoji in
-                                    Button(action: {
-                                        if selectedIngredients.contains(ingredient) {
-                                            selectedIngredients.remove(ingredient)
-                                        } else {
-                                            selectedIngredients.insert(ingredient)
-                                        }
-                                    }) {
-                                        Text("\(emoji) \(ingredient)")
-                                            .font(.subheadline)
-                                            .fontWeight(.bold)
-                                            .padding(.horizontal, 16)
-                                            .padding(.vertical, 8)
-                                            .background(selectedIngredients.contains(ingredient) ? Color(red: 0.8, green: 1.0, blue: 0.0) : Color.white)
-                                            .cornerRadius(9999)
-                                            .overlay(
+                            VStack(alignment: .leading) {
+                                Text("快速选择")
+                                    .font(.headline)
+                                    .fontWeight(.black)
+                                    .padding(.bottom, 12)
+                                    .foregroundColor(.black)
+                                
+                                let emojis = ["🥚", "🍅", "🧅", "🫑", "🥩", "🍗", "🍚", "🍜"]
+                                let ingredientsWithEmojis = Array(zip(commonIngredients, emojis))
+                                
+                                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                                    ForEach(ingredientsWithEmojis, id: \.0) {
+                                        ingredient, emoji in
+                                        Button(action: {
+                                            if selectedIngredients.contains(ingredient) {
+                                                selectedIngredients.remove(ingredient)
+                                            } else {
+                                                selectedIngredients.insert(ingredient)
+                                            }
+                                        }) {
+                                            ZStack {
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(Color.black, lineWidth: 2)
-                                            )
-                                            .shadow(color: Color.black, radius: 0, x: 2, y: 2)
+                                                    .fill(Color.black)
+                                                    .offset(x: 2, y: 2)
+                                                RoundedRectangle(cornerRadius: 9999)
+                                                    .fill(selectedIngredients.contains(ingredient) ? Color(red: 0.8, green: 1.0, blue: 0.0) : Color.white)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 9999)
+                                                            .stroke(Color.black, lineWidth: 2)
+                                                    )
+                                                Text("\(emoji) \(ingredient)")
+                                                    .font(.subheadline)
+                                                    .fontWeight(.bold)
+                                                    .foregroundColor(.black)
+                                                    .padding(.horizontal, 12)
+                                                    .padding(.vertical, 8)
+                                            }
+                                        }
                                     }
                                 }
                             }
+                            .padding()
                         }
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(24)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 24)
-                                .stroke(Color.black, lineWidth: 4)
-                        )
-                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                         .padding(.horizontal, 16)
                         
                         // 已选择食材预览
                         if !selectedIngredients.isEmpty {
                             let emojis = ["🥚", "🍅", "🧅", "🫑", "🥩", "🍗", "🍚", "🍜"]
                             
-                            VStack(alignment: .leading) {
-                                Text("已选择:")
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                    .padding(.bottom, 8)
-                                    .foregroundColor(.black)
-                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
-                                    ForEach(Array(selectedIngredients), id: \.self) { ingredient in
-                                        if let index = commonIngredients.firstIndex(of: ingredient), index < emojis.count {
-                                            Text("\(emojis[index]) \(ingredient)")
-                                                .font(.subheadline)
-                                                .fontWeight(.bold)
-                                                .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
-                                                .padding(.horizontal, 12)
-                                                .padding(.vertical, 6)
-                                                .background(Color.black)
-                                                .cornerRadius(9999)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(Color.black)
+                                    .offset(x: 6, y: 6)
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 24)
+                                            .stroke(Color.black, lineWidth: 4)
+                                    )
+                                
+                                VStack(alignment: .leading) {
+                                    Text("已选择:")
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .padding(.bottom, 8)
+                                        .foregroundColor(.black)
+                                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
+                                        ForEach(Array(selectedIngredients), id: \.self) { ingredient in
+                                            if let index = commonIngredients.firstIndex(of: ingredient), index < emojis.count {
+                                                Text("\(emojis[index]) \(ingredient)")
+                                                    .font(.subheadline)
+                                                    .fontWeight(.bold)
+                                                    .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                                    .padding(.horizontal, 12)
+                                                    .padding(.vertical, 6)
+                                                    .background(Color.black)
+                                                    .cornerRadius(9999)
+                                            }
                                         }
                                     }
                                 }
+                                .padding()
                             }
-                            .padding()
-                            .background(Color(red: 0.8, green: 1.0, blue: 0.0))
-                            .cornerRadius(24)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .stroke(Color.black, lineWidth: 4)
-                            )
-                            .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                             .padding(.horizontal, 16)
                         }
                         
@@ -178,25 +208,28 @@ struct InputView: View {
                         Button(action: { 
                             generateRecipe()
                         }) {
-                            if isLoading {
-                                ProgressView()
-                                    .tint(.black)
-                            } else {
-                                Text("✨ 生成食谱")
-                                    .font(.title)
-                                    .fontWeight(.black)
-                                    .foregroundColor(.black)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color.black)
+                                    .offset(x: 6, y: 6)
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .stroke(Color.black, lineWidth: 4)
+                                    )
+                                if isLoading {
+                                    ProgressView()
+                                        .tint(.black)
+                                } else {
+                                    Text("✨ 生成食谱")
+                                        .font(.title)
+                                        .fontWeight(.black)
+                                        .foregroundColor(.black)
+                                }
                             }
+                            .frame(height: 64)
                         }
-                        .frame(height: 64)
-                        .frame(maxWidth: .infinity)
-                        .background(Color(red: 0.8, green: 1.0, blue: 0.0))
-                        .cornerRadius(9999)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 9999)
-                                .stroke(Color.black, lineWidth: 4)
-                        )
-                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                         .padding(.horizontal, 16)
                         .disabled(isLoading)
                     }
