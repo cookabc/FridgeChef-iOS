@@ -1,8 +1,15 @@
 import SwiftUI
 
+// MARK: - Color Definitions
+public extension Color {
+    static let deepRoyalBlue = Color(red: 0.10, green: 0.14, blue: 0.49) // #1a237e
+    static let acidGreen = Color(red: 0.8, green: 1.0, blue: 0.0) // #CCFF00
+}
+
+// MARK: - NeoPopStyle ViewModifier
 struct NeoPopStyle: ViewModifier {
     let backgroundColor: Color
-    let cornerRadius: CGFloat = 24
+    let cornerRadius: CGFloat
     let borderWidth: CGFloat = 3
     let shadowOffset: CGFloat = 4
     
@@ -18,27 +25,41 @@ struct NeoPopStyle: ViewModifier {
     }
 }
 
-extension View {
-    func neoPopStyle(backgroundColor: Color = .white) -> some View {
-        self.modifier(NeoPopStyle(backgroundColor: backgroundColor))
+// MARK: - View Extensions
+public extension View {
+    func neoPopStyle(backgroundColor: Color = .white, cornerRadius: CGFloat = 24) -> some View {
+        self.modifier(NeoPopStyle(backgroundColor: backgroundColor, cornerRadius: cornerRadius))
+    }
+    
+    func neoPopBlue() -> some View {
+        self.neoPopStyle(backgroundColor: .deepRoyalBlue)
+    }
+    
+    func neoPopGreen() -> some View {
+        self.neoPopStyle(backgroundColor: .acidGreen)
+    }
+    
+    func neoPopCapsule(backgroundColor: Color = .white) -> some View {
+        self.neoPopStyle(backgroundColor: backgroundColor, cornerRadius: 9999)
     }
 }
 
+// MARK: - NeoPopButtonStyle
 struct NeoPopButtonStyle: ButtonStyle {
     let backgroundColor: Color
+    let cornerRadius: CGFloat = 9999
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
             .background(backgroundColor)
-            .cornerRadius(16)
+            .cornerRadius(cornerRadius)
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(Color.black, lineWidth: 3)
             )
             .shadow(color: Color.black, radius: 0, x: 4, y: 4)
             .offset(x: configuration.isPressed ? 4 : 0, y: configuration.isPressed ? 4 : 0)
-            .shadow(color: Color.black, radius: 0, x: configuration.isPressed ? 0 : 4, y: configuration.isPressed ? 0 : 4)
     }
 }
 
@@ -48,14 +69,17 @@ extension ButtonStyle where Self == NeoPopButtonStyle {
     }
 }
 
+// MARK: - NeoPopTextFieldStyle
 struct NeoPopTextFieldStyle: TextFieldStyle {
+    let cornerRadius: CGFloat = 9999
+    
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding()
             .background(Color.white)
-            .cornerRadius(16)
+            .cornerRadius(cornerRadius)
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(Color.black, lineWidth: 3)
             )
             .shadow(color: Color.black, radius: 0, x: 4, y: 4)
@@ -66,18 +90,20 @@ extension TextFieldStyle where Self == NeoPopTextFieldStyle {
     static var neoPop: NeoPopTextFieldStyle { .init() }
 }
 
+// MARK: - NeoPopTagStyle
 struct NeoPopTagStyle: ViewModifier {
     let isSelected: Bool
+    let cornerRadius: CGFloat = 9999
     
     func body(content: Content) -> some View {
         content
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
-            .background(isSelected ? Color(red: 0.8, green: 1.0, blue: 0.0) : Color.white)
-            .cornerRadius(20)
+            .background(isSelected ? Color.acidGreen : Color.white)
+            .cornerRadius(cornerRadius)
             .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.black, lineWidth: 3)
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .stroke(Color.black, lineWidth: 2)
             )
             .shadow(color: Color.black, radius: 0, x: 2, y: 2)
     }
