@@ -15,11 +15,10 @@ struct NeoPopStyle: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .background(backgroundColor)
-            .cornerRadius(cornerRadius)
-            .overlay(
+            .background(
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(Color.black, lineWidth: borderWidth)
+                    .fill(backgroundColor)
+                    .strokeBorder(Color.black, lineWidth: borderWidth)
             )
             .shadow(color: Color.black, radius: 0, x: shadowOffset, y: shadowOffset)
     }
