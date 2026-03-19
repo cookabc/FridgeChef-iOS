@@ -16,9 +16,12 @@ struct NeoPopStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(backgroundColor)
-                    .strokeBorder(Color.black, lineWidth: borderWidth)
+                ZStack {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(backgroundColor)
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(Color.black, lineWidth: borderWidth)
+                }
             )
             .shadow(color: Color.black, radius: 0, x: shadowOffset, y: shadowOffset)
     }
