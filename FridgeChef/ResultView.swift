@@ -9,7 +9,7 @@ struct ResultView: View {
     
     var body: some View {
         ZStack {
-            Color(red: 0.10, green: 0.14, blue: 0.49)
+            AppColors.background
                 .ignoresSafeArea()
             
             ScrollView(.vertical, showsIndicators: false) {
@@ -20,17 +20,17 @@ struct ResultView: View {
                         {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color.black)
+                                    .fill(AppColors.shadow)
                                     .offset(x: 6, y: 6)
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color.white)
+                                    .fill(AppColors.cardBackground)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(Color.black, lineWidth: 4)
+                                            .stroke(AppColors.primaryText, lineWidth: 4)
                                     )
                                 Image(systemName: "house")
                                     .font(.system(size: 20))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(AppColors.primaryText)
                             }
                             .frame(width: 48, height: 48)
                         }
@@ -38,11 +38,11 @@ struct ResultView: View {
                             Text("result.title".localized)
                                 .font(.largeTitle)
                                 .fontWeight(.black)
-                                .foregroundColor(.white)
+                                .foregroundColor(AppColors.primaryText)
                             Text("result.subtitle".localized)
                                 .font(.headline)
                                 .fontWeight(.bold)
-                                .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                .foregroundColor(AppColors.accent)
                         }
                         Spacer()
                     }
@@ -52,20 +52,20 @@ struct ResultView: View {
                     // 食谱标题卡片
                     ZStack {
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(Color.black)
+                            .fill(AppColors.shadow)
                             .offset(x: 6, y: 6)
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                            .fill(AppColors.accent)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 24)
-                                    .stroke(Color.black, lineWidth: 4)
+                                    .stroke(AppColors.primaryText, lineWidth: 4)
                             )
                         
                         VStack(alignment: .leading, spacing: 16) {
                             HStack(spacing: 16) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 16)
-                                        .fill(Color.black)
+                                        .fill(AppColors.shadow)
                                         .frame(width: 80, height: 80)
                                     Text("🍳")
                                         .font(.system(size: 40))
@@ -75,13 +75,13 @@ struct ResultView: View {
                                     Text(recipe.dishName)
                                         .font(.title)
                                         .fontWeight(.black)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(AppColors.primaryText)
                                     
                                     HStack(spacing: 8) {
                                         Text("result.difficulty.easy".localized)
                                             .font(.caption)
                                             .fontWeight(.bold)
-                                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                            .foregroundColor(AppColors.accent)
                                             .padding(.horizontal, 12)
                                             .padding(.vertical, 4)
                                             .background(Color.black)
@@ -90,14 +90,14 @@ struct ResultView: View {
                                         Text("result.time.minutes".localized(with: 15))
                                             .font(.caption)
                                             .fontWeight(.bold)
-                                            .foregroundColor(.black)
+                                            .foregroundColor(AppColors.primaryText)
                                             .padding(.horizontal, 12)
                                             .padding(.vertical, 4)
                                             .background(Color.white)
                                             .cornerRadius(9999)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(Color.black, lineWidth: 2)
+                                                    .stroke(AppColors.primaryText, lineWidth: 2)
                                             )
                                     }
                                 }
@@ -111,48 +111,48 @@ struct ResultView: View {
                     // 食材列表卡片
                     ZStack {
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(Color.black)
+                            .fill(AppColors.shadow)
                             .offset(x: 6, y: 6)
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(Color.white)
+                            .fill(AppColors.cardBackground)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 24)
-                                    .stroke(Color.black, lineWidth: 4)
+                                    .stroke(AppColors.primaryText, lineWidth: 4)
                             )
                         
                         VStack(alignment: .leading, spacing: 16) {
                             Text("result.ingredients".localized)
                                 .font(.title)
                                 .fontWeight(.black)
-                                .foregroundColor(.black)
+                                .foregroundColor(AppColors.primaryText)
                             
                             VStack(spacing: 12) {
                                 ForEach(recipe.ingredients, id: \.self) { ingredient in
                                     HStack(spacing: 12) {
                                         ZStack {
                                             Circle()
-                                                .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                                .fill(AppColors.accent)
                                                 .frame(width: 24, height: 24)
                                                 .overlay(
                                                     Circle()
-                                                        .stroke(Color.black, lineWidth: 2)
+                                                        .stroke(AppColors.primaryText, lineWidth: 2)
                                                 )
                                             Image(systemName: "checkmark")
                                                 .font(.system(size: 12, weight: .bold))
-                                                .foregroundColor(.black)
+                                                .foregroundColor(AppColors.primaryText)
                                         }
                                         
                                         Text(ingredient)
                                             .font(.body)
                                             .fontWeight(.bold)
-                                            .foregroundColor(.black)
+                                            .foregroundColor(AppColors.primaryText)
                                         
                                         Spacer()
                                         
                                         Text("result.ingredients.you.have".localized)
                                             .font(.caption)
                                             .fontWeight(.bold)
-                                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                            .foregroundColor(AppColors.accent)
                                     }
                                 }
                             }
@@ -165,38 +165,38 @@ struct ResultView: View {
                     // 制作步骤卡片
                     ZStack {
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(Color.black)
+                            .fill(AppColors.shadow)
                             .offset(x: 6, y: 6)
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(Color.white)
+                            .fill(AppColors.cardBackground)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 24)
-                                    .stroke(Color.black, lineWidth: 4)
+                                    .stroke(AppColors.primaryText, lineWidth: 4)
                             )
                         
                         VStack(alignment: .leading, spacing: 16) {
                             Text("result.steps".localized)
                                 .font(.title)
                                 .fontWeight(.black)
-                                .foregroundColor(.black)
+                                .foregroundColor(AppColors.primaryText)
                             
                             VStack(spacing: 16) {
                                 ForEach(recipe.steps.indices, id: \.self) { index in
                                     HStack(alignment: .top, spacing: 16) {
                                         ZStack {
                                             Circle()
-                                                .fill(Color.black)
+                                                .fill(AppColors.shadow)
                                                 .frame(width: 40, height: 40)
                                             Text("\(index + 1)")
                                                 .font(.title3)
                                                 .fontWeight(.black)
-                                                .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                                .foregroundColor(AppColors.accent)
                                         }
                                         
                                         Text(recipe.steps[index])
                                             .font(.body)
                                             .fontWeight(.semibold)
-                                            .foregroundColor(.black)
+                                            .foregroundColor(AppColors.primaryText)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }
                                 }
@@ -215,18 +215,18 @@ struct ResultView: View {
                         }) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color.black)
+                                    .fill(AppColors.shadow)
                                     .offset(x: 6, y: 6)
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color.white)
+                                    .fill(AppColors.cardBackground)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(Color.black, lineWidth: 4)
+                                            .stroke(AppColors.primaryText, lineWidth: 4)
                                     )
                                 Text("result.regenerate".localized)
                                     .font(.title3)
                                     .fontWeight(.black)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(AppColors.primaryText)
                             }
                             .frame(height: 56)
                         }
@@ -238,18 +238,18 @@ struct ResultView: View {
                         }) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color.black)
+                                    .fill(AppColors.shadow)
                                     .offset(x: 6, y: 6)
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    .fill(AppColors.accent)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(Color.black, lineWidth: 4)
+                                            .stroke(AppColors.primaryText, lineWidth: 4)
                                     )
                                 Text(isSaved ? "result.saved".localized : "result.save".localized)
                                     .font(.title3)
                                     .fontWeight(.black)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(AppColors.primaryText)
                             }
                             .frame(height: 56)
                         }

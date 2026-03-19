@@ -13,7 +13,7 @@ struct InputView: View {
     
     var body: some View {
         ZStack {
-            Color(red: 0.10, green: 0.14, blue: 0.49)
+            AppColors.background
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -23,17 +23,17 @@ struct InputView: View {
                     {
                         ZStack {
                             RoundedRectangle(cornerRadius: 9999)
-                                .fill(Color.black)
+                                .fill(AppColors.shadow)
                                 .offset(x: 6, y: 6)
                             RoundedRectangle(cornerRadius: 9999)
-                                .fill(Color.white)
+                                .fill(AppColors.cardBackground)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 9999)
-                                        .stroke(Color.black, lineWidth: 4)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
                                 )
                             Image(systemName: "chevron.left")
                                 .font(.system(size: 20))
-                                .foregroundColor(.black)
+                                .foregroundColor(AppColors.primaryText)
                         }
                         .frame(width: 48, height: 48)
                     }
@@ -41,11 +41,11 @@ struct InputView: View {
                         Text("input.title".localized)
                             .font(.largeTitle)
                             .fontWeight(.black)
-                            .foregroundColor(.white)
+                            .foregroundColor(AppColors.primaryText)
                         Text("input.subtitle".localized)
                             .font(.headline)
                             .fontWeight(.bold)
-                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                            .foregroundColor(AppColors.accent)
                     }
                     Spacer()
                 }
@@ -57,13 +57,13 @@ struct InputView: View {
                         // 食材输入框卡片
                         ZStack {
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.black)
+                                .fill(AppColors.shadow)
                                 .offset(x: 6, y: 6)
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.white)
+                                .fill(AppColors.cardBackground)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 24)
-                                        .stroke(Color.black, lineWidth: 4)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
                                 )
                             
                             VStack(alignment: .leading) {
@@ -71,18 +71,18 @@ struct InputView: View {
                                     .font(.headline)
                                     .fontWeight(.bold)
                                     .padding(.bottom, 8)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(AppColors.primaryText)
                                 
                                 // 输入框
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 9999)
-                                        .fill(Color.black)
+                                        .fill(AppColors.shadow)
                                         .offset(x: 4, y: 4)
                                     RoundedRectangle(cornerRadius: 9999)
-                                        .fill(Color.white)
+                                        .fill(AppColors.cardBackground)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 9999)
-                                                .stroke(Color.black, lineWidth: 3)
+                                                .stroke(AppColors.primaryText, lineWidth: 3)
                                         )
                                     TextField("input.placeholder".localized, text: $customIngredients)
                                         .padding()
@@ -93,7 +93,7 @@ struct InputView: View {
                                 Text("input.example".localized)
                                     .font(.caption)
                                     .fontWeight(.semibold)
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(AppColors.secondaryText)
                             }
                             .padding()
                         }
@@ -102,13 +102,13 @@ struct InputView: View {
                         // 常用食材标签卡片
                         ZStack {
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.black)
+                                .fill(AppColors.shadow)
                                 .offset(x: 6, y: 6)
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.white)
+                                .fill(AppColors.cardBackground)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 24)
-                                        .stroke(Color.black, lineWidth: 4)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
                                 )
                             
                             VStack(alignment: .leading) {
@@ -116,7 +116,7 @@ struct InputView: View {
                                     .font(.headline)
                                     .fontWeight(.black)
                                     .padding(.bottom, 12)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(AppColors.primaryText)
                                 
                                 let emojis = ["🥚", "🍅", "🧅", "🫑", "🥩", "🍗", "🍚", "🍜"]
                                 let ingredientsWithEmojis = Array(zip(ingredientKeys, emojis))
@@ -133,18 +133,18 @@ struct InputView: View {
                                         }) {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .fill(Color.black)
+                                                    .fill(AppColors.shadow)
                                                     .offset(x: 2, y: 2)
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .fill(selectedIngredients.contains(ingredientKey) ? Color(red: 0.8, green: 1.0, blue: 0.0) : Color.white)
+                                                    .fill(selectedIngredients.contains(ingredientKey) ? AppColors.accent : Color.white)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 9999)
-                                                            .stroke(Color.black, lineWidth: 2)
+                                                            .stroke(AppColors.primaryText, lineWidth: 2)
                                                     )
                                                 Text("\(emoji) \(ingredientKey.localized)")
                                                     .font(.subheadline)
                                                     .fontWeight(.bold)
-                                                    .foregroundColor(.black)
+                                                    .foregroundColor(AppColors.primaryText)
                                                     .padding(.horizontal, 12)
                                                     .padding(.vertical, 8)
                                             }
@@ -162,13 +162,13 @@ struct InputView: View {
                             
                             ZStack {
                                 RoundedRectangle(cornerRadius: 24)
-                                    .fill(Color.black)
+                                    .fill(AppColors.shadow)
                                     .offset(x: 6, y: 6)
                                 RoundedRectangle(cornerRadius: 24)
-                                    .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    .fill(AppColors.accent)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 24)
-                                            .stroke(Color.black, lineWidth: 4)
+                                            .stroke(AppColors.primaryText, lineWidth: 4)
                                     )
                                 
                                 VStack(alignment: .leading) {
@@ -176,14 +176,14 @@ struct InputView: View {
                                         .font(.headline)
                                         .fontWeight(.bold)
                                         .padding(.bottom, 8)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(AppColors.primaryText)
                                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
                                         ForEach(Array(selectedIngredients), id: \.self) { ingredientKey in
                                             if let index = ingredientKeys.firstIndex(of: ingredientKey), index < emojis.count {
                                                 Text("\(emojis[index]) \(ingredientKey.localized)")
                                                     .font(.subheadline)
                                                     .fontWeight(.bold)
-                                                    .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                                    .foregroundColor(AppColors.accent)
                                                     .padding(.horizontal, 12)
                                                     .padding(.vertical, 6)
                                                     .background(Color.black)
@@ -211,13 +211,13 @@ struct InputView: View {
                         }) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color.black)
+                                    .fill(AppColors.shadow)
                                     .offset(x: 6, y: 6)
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    .fill(AppColors.accent)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(Color.black, lineWidth: 4)
+                                            .stroke(AppColors.primaryText, lineWidth: 4)
                                     )
                                 if isLoading {
                                     ProgressView()
@@ -226,7 +226,7 @@ struct InputView: View {
                                     Text("input.generate".localized)
                                         .font(.title)
                                         .fontWeight(.black)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(AppColors.primaryText)
                                 }
                             }
                             .frame(height: 64)
