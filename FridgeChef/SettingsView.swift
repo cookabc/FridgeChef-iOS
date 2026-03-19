@@ -35,16 +35,10 @@ struct SettingsView: View {
                         }
                         .frame(width: 48, height: 48)
                     }
-                    VStack(alignment: .leading) {
-                        Text("settings.title".localized)
-                            .font(.largeTitle)
-                            .fontWeight(.black)
-                            .foregroundColor(AppColors.primaryText)
-                        Text("settings.subtitle".localized)
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(AppColors.accent)
-                    }
+                    Text("settings.title".localized)
+                        .font(.largeTitle)
+                        .fontWeight(.black)
+                        .foregroundColor(AppColors.accent)
                     Spacer()
                 }
                 .padding()
