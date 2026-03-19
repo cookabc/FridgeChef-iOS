@@ -70,8 +70,18 @@ class APIService {
             throw NSError(domain: "Invalid API response", code: 0, userInfo: nil)
         }
 
+        // 清理可能的 markdown 代码块标记
+        var cleanedContent = content
+        if content.hasPrefix("```json") {
+            cleanedContent = content.replacingOccurrences(of: "```json", with: "")
+            cleanedContent = cleanedContent.replacingOccurrences(of: "```", with: "")
+        } else if content.hasPrefix("```") {
+            cleanedContent = content.replacingOccurrences(of: "```", with: "")
+        }
+        cleanedContent = cleanedContent.trimmingCharacters(in: .whitespacesAndNewlines)
+
         // 解析 JSON 内容
-        guard let recipeData = content.data(using: .utf8) else {
+        guard let recipeData = cleanedContent.data(using: .utf8) else {
             throw NSError(domain: "Failed to encode content to data", code: 0, userInfo: nil)
         }
 
