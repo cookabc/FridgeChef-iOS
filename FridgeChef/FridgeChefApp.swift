@@ -13,27 +13,31 @@ struct FridgeChefApp: App {
     let persistenceController = PersistenceController.shared
     @State private var currentView: String = "home"
     @State private var generatedRecipe: RecipeModel? = nil
+    @ObservedObject private var settings = AppSettings.shared
 
     var body: some Scene {
         WindowGroup {
-            if currentView == "home" {
-                HomeView(currentView: $currentView)
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            } else if currentView == "input" {
-                InputView(currentView: $currentView, generatedRecipe: $generatedRecipe)
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            } else if currentView == "result" {
-                if let recipe = generatedRecipe {
-                    ResultView(recipe: recipe, currentView: $currentView)
-                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                } else {
+            Group {
+                if currentView == "home" {
                     HomeView(currentView: $currentView)
                         .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                } else if currentView == "input" {
+                    InputView(currentView: $currentView, generatedRecipe: $generatedRecipe)
+                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                } else if currentView == "result" {
+                    if let recipe = generatedRecipe {
+                        ResultView(recipe: recipe, currentView: $currentView)
+                            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    } else {
+                        HomeView(currentView: $currentView)
+                            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    }
+                } else if currentView == "settings" {
+                    SettingsView(currentView: $currentView)
+                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 }
-            } else if currentView == "settings" {
-                SettingsView(currentView: $currentView)
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
+            .preferredColorScheme(settings.theme.colorScheme)
         }
     }
 }

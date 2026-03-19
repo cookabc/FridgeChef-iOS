@@ -51,8 +51,8 @@
 "result.save.error" = "保存失败";
 
 // MARK: - Settings View
-"settings.title" = "API 配置";
-"settings.subtitle" = "配置你的 AI 服务";
+"settings.title" = "设置";
+"settings.subtitle" = "应用设置";
 "settings.base.url" = "Base URL";
 "settings.model" = "Model";
 "settings.api.key" = "API Key";
@@ -61,6 +61,16 @@
 "settings.placeholder.key" = "输入 API Key";
 "settings.save" = "保存配置";
 "settings.save.success" = "配置保存成功！";
+
+// MARK: - Language
+"settings.language" = "语言";
+"settings.language.system" = "跟随系统";
+
+// MARK: - Theme
+"settings.theme" = "主题";
+"settings.theme.system" = "跟随系统";
+"settings.theme.light" = "浅色";
+"settings.theme.dark" = "深色";
 
 // MARK: - Ingredients
 "ingredient.egg" = "鸡蛋";

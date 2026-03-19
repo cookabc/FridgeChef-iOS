@@ -7,6 +7,7 @@ struct SettingsView: View {
     @State private var showSuccessMessage: Bool = false
     
     @Binding var currentView: String
+    @ObservedObject private var settings = AppSettings.shared
     
     var body: some View {
         ZStack {
@@ -51,7 +52,67 @@ struct SettingsView: View {
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 16) {
-                        // 配置表单卡片
+                        // 语言设置卡片
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.black)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
+                            
+                            VStack(alignment: .leading, spacing: 16) {
+                                Text("settings.language".localized)
+                                    .font(.headline)
+                                    .fontWeight(.black)
+                                    .foregroundColor(.black)
+                                
+                                Picker("settings.language".localized, selection: $settings.language) {
+                                    ForEach(AppLanguage.allCases) { language in
+                                        Text(language.displayName)
+                                            .tag(language)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+                            }
+                            .padding()
+                        }
+                        .padding(.horizontal, 16)
+                        
+                        // 主题设置卡片
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.black)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
+                            
+                            VStack(alignment: .leading, spacing: 16) {
+                                Text("settings.theme".localized)
+                                    .font(.headline)
+                                    .fontWeight(.black)
+                                    .foregroundColor(.black)
+                                
+                                Picker("settings.theme".localized, selection: $settings.theme) {
+                                    ForEach(AppTheme.allCases) { theme in
+                                        Text(theme.displayName)
+                                            .tag(theme)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+                            }
+                            .padding()
+                        }
+                        .padding(.horizontal, 16)
+                        
+                        // API 配置卡片
                         ZStack {
                             RoundedRectangle(cornerRadius: 24)
                                 .fill(Color.black)
@@ -64,10 +125,15 @@ struct SettingsView: View {
                                 )
                             
                             VStack(alignment: .leading, spacing: 24) {
+                                Text("API")
+                                    .font(.headline)
+                                    .fontWeight(.black)
+                                    .foregroundColor(.black)
+                                
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text("settings.base.url".localized)
-                                        .font(.headline)
-                                        .fontWeight(.black)
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
                                         .foregroundColor(.black)
                                     
                                     ZStack {
@@ -88,8 +154,8 @@ struct SettingsView: View {
                                 
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text("settings.model".localized)
-                                        .font(.headline)
-                                        .fontWeight(.black)
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
                                         .foregroundColor(.black)
                                     
                                     ZStack {
@@ -110,8 +176,8 @@ struct SettingsView: View {
                                 
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text("settings.api.key".localized)
-                                        .font(.headline)
-                                        .fontWeight(.black)
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
                                         .foregroundColor(.black)
                                     
                                     ZStack {
@@ -131,7 +197,6 @@ struct SettingsView: View {
                                 }
                             }
                             .padding()
-                            .padding(.bottom)
                         }
                         .padding(.horizontal, 16)
                         

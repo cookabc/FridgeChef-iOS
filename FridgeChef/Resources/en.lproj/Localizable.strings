@@ -51,8 +51,8 @@
 "result.save.error" = "Save failed";
 
 // MARK: - Settings View
-"settings.title" = "API Settings";
-"settings.subtitle" = "Configure your AI service";
+"settings.title" = "Settings";
+"settings.subtitle" = "App Settings";
 "settings.base.url" = "Base URL";
 "settings.model" = "Model";
 "settings.api.key" = "API Key";
@@ -61,6 +61,16 @@
 "settings.placeholder.key" = "Enter API Key";
 "settings.save" = "Save Settings";
 "settings.save.success" = "Settings saved successfully!";
+
+// MARK: - Language
+"settings.language" = "Language";
+"settings.language.system" = "System";
+
+// MARK: - Theme
+"settings.theme" = "Theme";
+"settings.theme.system" = "System";
+"settings.theme.light" = "Light";
+"settings.theme.dark" = "Dark";
 
 // MARK: - Ingredients
 "ingredient.egg" = "Egg";
