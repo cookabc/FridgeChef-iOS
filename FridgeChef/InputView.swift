@@ -37,16 +37,10 @@ struct InputView: View {
                         }
                         .frame(width: 48, height: 48)
                     }
-                    VStack(alignment: .leading) {
-                        Text("input.title".localized)
-                            .font(.largeTitle)
-                            .fontWeight(.black)
-                            .foregroundColor(AppColors.primaryText)
-                        Text("input.subtitle".localized)
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(AppColors.accent)
-                    }
+                    Text("input.title".localized)
+                        .font(.largeTitle)
+                        .fontWeight(.black)
+                        .foregroundColor(AppColors.accent)
                     Spacer()
                 }
                 .padding()

@@ -34,16 +34,10 @@ struct ResultView: View {
                             }
                             .frame(width: 48, height: 48)
                         }
-                        VStack(alignment: .leading) {
-                            Text("result.title".localized)
-                                .font(.largeTitle)
-                                .fontWeight(.black)
-                                .foregroundColor(AppColors.primaryText)
-                            Text("result.subtitle".localized)
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundColor(AppColors.accent)
-                        }
+                        Text("result.title".localized)
+                            .font(.largeTitle)
+                            .fontWeight(.black)
+                            .foregroundColor(AppColors.accent)
                         Spacer()
                     }
                     .padding()
