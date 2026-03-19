@@ -35,11 +35,11 @@ struct SettingsView: View {
                         .frame(width: 48, height: 48)
                     }
                     VStack(alignment: .leading) {
-                        Text("API 配置")
+                        Text("settings.title".localized)
                             .font(.largeTitle)
                             .fontWeight(.black)
                             .foregroundColor(.white)
-                        Text("配置你的 AI 服务")
+                        Text("settings.subtitle".localized)
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
@@ -65,7 +65,7 @@ struct SettingsView: View {
                             
                             VStack(alignment: .leading, spacing: 24) {
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text("Base URL")
+                                    Text("settings.base.url".localized)
                                         .font(.headline)
                                         .fontWeight(.black)
                                         .foregroundColor(.black)
@@ -80,14 +80,14 @@ struct SettingsView: View {
                                                 RoundedRectangle(cornerRadius: 9999)
                                                     .stroke(Color.black, lineWidth: 3)
                                             )
-                                        TextField("https://api-inference.modelscope.cn/v1", text: $baseURL)
+                                        TextField("settings.placeholder.url".localized, text: $baseURL)
                                             .padding()
                                     }
                                     .frame(height: 48)
                                 }
                                 
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text("Model")
+                                    Text("settings.model".localized)
                                         .font(.headline)
                                         .fontWeight(.black)
                                         .foregroundColor(.black)
@@ -102,14 +102,14 @@ struct SettingsView: View {
                                                 RoundedRectangle(cornerRadius: 9999)
                                                     .stroke(Color.black, lineWidth: 3)
                                             )
-                                        TextField("MiniMax/MiniMax-M2.5", text: $model)
+                                        TextField("settings.placeholder.model".localized, text: $model)
                                             .padding()
                                     }
                                     .frame(height: 48)
                                 }
                                 
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text("API Key")
+                                    Text("settings.api.key".localized)
                                         .font(.headline)
                                         .fontWeight(.black)
                                         .foregroundColor(.black)
@@ -124,7 +124,7 @@ struct SettingsView: View {
                                                 RoundedRectangle(cornerRadius: 9999)
                                                     .stroke(Color.black, lineWidth: 3)
                                             )
-                                        TextField("输入 API Key", text: $apiKey)
+                                        TextField("settings.placeholder.key".localized, text: $apiKey)
                                             .padding()
                                     }
                                     .frame(height: 48)
@@ -156,7 +156,7 @@ struct SettingsView: View {
                                         RoundedRectangle(cornerRadius: 9999)
                                             .stroke(Color.black, lineWidth: 4)
                                     )
-                                Text("保存配置")
+                                Text("settings.save".localized)
                                     .font(.title)
                                     .fontWeight(.black)
                                     .foregroundColor(.black)
@@ -171,7 +171,7 @@ struct SettingsView: View {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.title2)
                                     .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
-                                Text("配置保存成功！")
+                                Text("settings.save.success".localized)
                                     .font(.headline)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)

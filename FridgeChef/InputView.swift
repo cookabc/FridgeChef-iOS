@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct InputView: View {
-    let commonIngredients = ["鸡蛋", "番茄", "洋葱", "青椒", "猪肉", "鸡肉", "米饭", "面条"]
+    let commonIngredients = ["ingredient.egg", "ingredient.tomato", "ingredient.onion", "ingredient.pepper", "ingredient.pork", "ingredient.chicken", "ingredient.rice", "ingredient.noodle"]
+    let ingredientKeys = ["ingredient.egg", "ingredient.tomato", "ingredient.onion", "ingredient.pepper", "ingredient.pork", "ingredient.chicken", "ingredient.rice", "ingredient.noodle"]
     @State private var selectedIngredients: Set<String> = []
     @State private var customIngredients: String = ""
     @State private var isLoading: Bool = false
@@ -37,11 +38,11 @@ struct InputView: View {
                         .frame(width: 48, height: 48)
                     }
                     VStack(alignment: .leading) {
-                        Text("输入食材")
+                        Text("input.title".localized)
                             .font(.largeTitle)
                             .fontWeight(.black)
                             .foregroundColor(.white)
-                        Text("告诉 AI 你有什么")
+                        Text("input.subtitle".localized)
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
@@ -66,7 +67,7 @@ struct InputView: View {
                                 )
                             
                             VStack(alignment: .leading) {
-                                Text("冰箱里有什么？")
+                                Text("input.fridge.question".localized)
                                     .font(.headline)
                                     .fontWeight(.bold)
                                     .padding(.bottom, 8)
@@ -83,13 +84,13 @@ struct InputView: View {
                                             RoundedRectangle(cornerRadius: 9999)
                                                 .stroke(Color.black, lineWidth: 3)
                                         )
-                                    TextField("输入食材，用逗号分隔...", text: $customIngredients)
+                                    TextField("input.placeholder".localized, text: $customIngredients)
                                         .padding()
                                 }
                                 .frame(height: 48)
                                 .padding(.bottom, 8)
                                 
-                                Text("例如：鸡蛋, 番茄, 洋葱, 青椒")
+                                Text("input.example".localized)
                                     .font(.caption)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.gray)
@@ -111,23 +112,23 @@ struct InputView: View {
                                 )
                             
                             VStack(alignment: .leading) {
-                                Text("快速选择")
+                                Text("input.quick.select".localized)
                                     .font(.headline)
                                     .fontWeight(.black)
                                     .padding(.bottom, 12)
                                     .foregroundColor(.black)
                                 
                                 let emojis = ["🥚", "🍅", "🧅", "🫑", "🥩", "🍗", "🍚", "🍜"]
-                                let ingredientsWithEmojis = Array(zip(commonIngredients, emojis))
+                                let ingredientsWithEmojis = Array(zip(ingredientKeys, emojis))
                                 
                                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                                     ForEach(ingredientsWithEmojis, id: \.0) {
-                                        ingredient, emoji in
+                                        ingredientKey, emoji in
                                         Button(action: {
-                                            if selectedIngredients.contains(ingredient) {
-                                                selectedIngredients.remove(ingredient)
+                                            if selectedIngredients.contains(ingredientKey) {
+                                                selectedIngredients.remove(ingredientKey)
                                             } else {
-                                                selectedIngredients.insert(ingredient)
+                                                selectedIngredients.insert(ingredientKey)
                                             }
                                         }) {
                                             ZStack {
@@ -135,12 +136,12 @@ struct InputView: View {
                                                     .fill(Color.black)
                                                     .offset(x: 2, y: 2)
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .fill(selectedIngredients.contains(ingredient) ? Color(red: 0.8, green: 1.0, blue: 0.0) : Color.white)
+                                                    .fill(selectedIngredients.contains(ingredientKey) ? Color(red: 0.8, green: 1.0, blue: 0.0) : Color.white)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 9999)
                                                             .stroke(Color.black, lineWidth: 2)
                                                     )
-                                                Text("\(emoji) \(ingredient)")
+                                                Text("\(emoji) \(ingredientKey.localized)")
                                                     .font(.subheadline)
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.black)
@@ -171,15 +172,15 @@ struct InputView: View {
                                     )
                                 
                                 VStack(alignment: .leading) {
-                                    Text("已选择:")
+                                    Text("input.selected".localized)
                                         .font(.headline)
                                         .fontWeight(.bold)
                                         .padding(.bottom, 8)
                                         .foregroundColor(.black)
                                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
-                                        ForEach(Array(selectedIngredients), id: \.self) { ingredient in
-                                            if let index = commonIngredients.firstIndex(of: ingredient), index < emojis.count {
-                                                Text("\(emojis[index]) \(ingredient)")
+                                        ForEach(Array(selectedIngredients), id: \.self) { ingredientKey in
+                                            if let index = ingredientKeys.firstIndex(of: ingredientKey), index < emojis.count {
+                                                Text("\(emojis[index]) \(ingredientKey.localized)")
                                                     .font(.subheadline)
                                                     .fontWeight(.bold)
                                                     .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
@@ -222,7 +223,7 @@ struct InputView: View {
                                     ProgressView()
                                         .tint(.black)
                                 } else {
-                                    Text("✨ 生成食谱")
+                                    Text("input.generate".localized)
                                         .font(.title)
                                         .fontWeight(.black)
                                         .foregroundColor(.black)
@@ -243,7 +244,7 @@ struct InputView: View {
     
     private func generateRecipe() {
         // 收集所有食材
-        var allIngredients: [String] = Array(selectedIngredients)
+        var allIngredients: [String] = Array(selectedIngredients).map { $0.localized }
 
         // 处理自定义输入的食材
         if !customIngredients.isEmpty {
@@ -255,7 +256,7 @@ struct InputView: View {
 
         // 检查是否有食材
         if allIngredients.isEmpty {
-            errorMessage = "请至少选择一种食材"
+            errorMessage = "input.error.empty".localized
             return
         }
 
@@ -271,7 +272,7 @@ struct InputView: View {
                 generatedRecipe = recipe
                 currentView = "result"
             } catch {
-                errorMessage = "生成食谱失败，请重试"
+                errorMessage = "input.error.failed".localized
                 print("Error generating recipe: \(error)")
             }
             isLoading = false

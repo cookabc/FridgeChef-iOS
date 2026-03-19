@@ -62,6 +62,16 @@
 "settings.save" = "保存配置";
 "settings.save.success" = "配置保存成功！";
 
+// MARK: - Ingredients
+"ingredient.egg" = "鸡蛋";
+"ingredient.tomato" = "番茄";
+"ingredient.onion" = "洋葱";
+"ingredient.pepper" = "青椒";
+"ingredient.pork" = "猪肉";
+"ingredient.chicken" = "鸡肉";
+"ingredient.rice" = "米饭";
+"ingredient.noodle" = "面条";
+
 // MARK: - Common
 "common.back" = "返回";
 "common.home" = "首页";

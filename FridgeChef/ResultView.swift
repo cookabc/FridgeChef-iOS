@@ -35,11 +35,11 @@ struct ResultView: View {
                             .frame(width: 48, height: 48)
                         }
                         VStack(alignment: .leading) {
-                            Text("食谱详情")
+                            Text("result.title".localized)
                                 .font(.largeTitle)
                                 .fontWeight(.black)
                                 .foregroundColor(.white)
-                            Text("AI 为你生成的食谱")
+                            Text("result.subtitle".localized)
                                 .font(.headline)
                                 .fontWeight(.bold)
                                 .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
@@ -78,7 +78,7 @@ struct ResultView: View {
                                         .foregroundColor(.black)
                                     
                                     HStack(spacing: 8) {
-                                        Text("简单")
+                                        Text("result.difficulty.easy".localized)
                                             .font(.caption)
                                             .fontWeight(.bold)
                                             .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
@@ -87,7 +87,7 @@ struct ResultView: View {
                                             .background(Color.black)
                                             .cornerRadius(9999)
                                         
-                                        Text("15 分钟")
+                                        Text("result.time.minutes".localized(with: 15))
                                             .font(.caption)
                                             .fontWeight(.bold)
                                             .foregroundColor(.black)
@@ -121,7 +121,7 @@ struct ResultView: View {
                             )
                         
                         VStack(alignment: .leading, spacing: 16) {
-                            Text("🥬 所需食材")
+                            Text("result.ingredients".localized)
                                 .font(.title)
                                 .fontWeight(.black)
                                 .foregroundColor(.black)
@@ -149,7 +149,7 @@ struct ResultView: View {
                                         
                                         Spacer()
                                         
-                                        Text("✓ 你有")
+                                        Text("result.ingredients.you.have".localized)
                                             .font(.caption)
                                             .fontWeight(.bold)
                                             .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
@@ -175,7 +175,7 @@ struct ResultView: View {
                             )
                         
                         VStack(alignment: .leading, spacing: 16) {
-                            Text("👨‍🍳 制作步骤")
+                            Text("result.steps".localized)
                                 .font(.title)
                                 .fontWeight(.black)
                                 .foregroundColor(.black)
@@ -223,7 +223,7 @@ struct ResultView: View {
                                         RoundedRectangle(cornerRadius: 9999)
                                             .stroke(Color.black, lineWidth: 4)
                                     )
-                                Text("🔄 重新生成")
+                                Text("result.regenerate".localized)
                                     .font(.title3)
                                     .fontWeight(.black)
                                     .foregroundColor(.black)
@@ -246,7 +246,7 @@ struct ResultView: View {
                                         RoundedRectangle(cornerRadius: 9999)
                                             .stroke(Color.black, lineWidth: 4)
                                     )
-                                Text(isSaved ? "✅ 已保存" : "💾 保存食谱")
+                                Text(isSaved ? "result.saved".localized : "result.save".localized)
                                     .font(.title3)
                                     .fontWeight(.black)
                                     .foregroundColor(.black)
@@ -267,10 +267,10 @@ struct ResultView: View {
         let newRecipe = RecipeEntity(context: viewContext)
         newRecipe.id = UUID()
         newRecipe.name = recipe.dishName
-        newRecipe.difficulty = "中等"
+        newRecipe.difficulty = "result.difficulty.medium".localized
         newRecipe.timestamp = Date()
         newRecipe.colorIndex = Int16(Int.random(in: 0..<5))
-        newRecipe.cookTime = "20分钟"
+        newRecipe.cookTime = "result.time.minutes".localized(with: 20)
         newRecipe.desc = recipe.steps.joined(separator: "\n")
         
         do {

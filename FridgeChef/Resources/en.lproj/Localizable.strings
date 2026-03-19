@@ -62,6 +62,16 @@
 "settings.save" = "Save Settings";
 "settings.save.success" = "Settings saved successfully!";
 
+// MARK: - Ingredients
+"ingredient.egg" = "Egg";
+"ingredient.tomato" = "Tomato";
+"ingredient.onion" = "Onion";
+"ingredient.pepper" = "Pepper";
+"ingredient.pork" = "Pork";
+"ingredient.chicken" = "Chicken";
+"ingredient.rice" = "Rice";
+"ingredient.noodle" = "Noodle";
+
 // MARK: - Common
 "common.back" = "Back";
 "common.home" = "Home";
