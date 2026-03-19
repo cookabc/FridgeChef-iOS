@@ -10,91 +10,176 @@ struct SettingsView: View {
     
     var body: some View {
         ZStack {
-            Color(red: 1.0, green: 0.99, blue: 0.96) // #FFFDF5
+            Color(red: 0.10, green: 0.14, blue: 0.49)
                 .ignoresSafeArea()
             
-            VStack {
+            VStack(spacing: 0) {
                 // 顶部返回按钮和标题
                 HStack {
                     Button(action: { currentView = "home" })
                     {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 16)
+                            RoundedRectangle(cornerRadius: 9999)
+                                .fill(Color.black)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 9999)
                                 .fill(Color.white)
-                                .frame(width: 40, height: 40)
-                                .neoPopStyle()
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 9999)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
                             Image(systemName: "chevron.left")
                                 .font(.system(size: 20))
+                                .foregroundColor(.black)
                         }
+                        .frame(width: 48, height: 48)
                     }
-                    Text("API 配置")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                    VStack(alignment: .leading) {
+                        Text("API 配置")
+                            .font(.largeTitle)
+                            .fontWeight(.black)
+                            .foregroundColor(.white)
+                        Text("配置你的 AI 服务")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                    }
                     Spacer()
                 }
                 .padding()
+                .padding(.top, 8)
                 
-                // 配置表单
-                VStack(alignment: .leading) {
-                    Text("Base URL")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .padding(.bottom, 8)
-                    TextField("https://api-inference.modelscope.cn/v1", text: $baseURL)
-                        .textFieldStyle(.neoPop)
-                        .padding(.bottom, 24)
-                    
-                    Text("Model")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .padding(.bottom, 8)
-                    TextField("MiniMax/MiniMax-M2.5", text: $model)
-                        .textFieldStyle(.neoPop)
-                        .padding(.bottom, 24)
-                    
-                    Text("API Key")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .padding(.bottom, 8)
-                    TextField("输入 API Key", text: $apiKey)
-                        .textFieldStyle(.neoPop)
-                        .padding(.bottom, 32)
-                    
-                    // 保存按钮
-                    Button(action: {
-                        // 保存配置到 UserDefaults
-                        UserDefaults.standard.set(baseURL, forKey: "API_BASE_URL")
-                        UserDefaults.standard.set(model, forKey: "API_MODEL")
-                        UserDefaults.standard.set(apiKey, forKey: "API_KEY")
-                        
-                        // 显示成功消息
-                        showSuccessMessage = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            showSuccessMessage = false
-                        }
-                    }) {
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        // 配置表单卡片
                         ZStack {
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color(red: 0.8, green: 1.0, blue: 0.0)) // #CCFF00
-                                .frame(height: 60)
-                                .neoPopStyle(backgroundColor: Color(red: 0.8, green: 1.0, blue: 0.0))
-                            Text("保存配置")
-                                .font(.title)
-                                .fontWeight(.bold)
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.black)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
+                            
+                            VStack(alignment: .leading, spacing: 24) {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Base URL")
+                                        .font(.headline)
+                                        .fontWeight(.black)
+                                        .foregroundColor(.black)
+                                    
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .fill(Color.black)
+                                            .offset(x: 6, y: 6)
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .fill(Color.white)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 9999)
+                                                    .stroke(Color.black, lineWidth: 3)
+                                            )
+                                        TextField("https://api-inference.modelscope.cn/v1", text: $baseURL)
+                                            .padding()
+                                    }
+                                    .frame(height: 48)
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Model")
+                                        .font(.headline)
+                                        .fontWeight(.black)
+                                        .foregroundColor(.black)
+                                    
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .fill(Color.black)
+                                            .offset(x: 6, y: 6)
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .fill(Color.white)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 9999)
+                                                    .stroke(Color.black, lineWidth: 3)
+                                            )
+                                        TextField("MiniMax/MiniMax-M2.5", text: $model)
+                                            .padding()
+                                    }
+                                    .frame(height: 48)
+                                }
+                                
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("API Key")
+                                        .font(.headline)
+                                        .fontWeight(.black)
+                                        .foregroundColor(.black)
+                                    
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .fill(Color.black)
+                                            .offset(x: 6, y: 6)
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .fill(Color.white)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 9999)
+                                                    .stroke(Color.black, lineWidth: 3)
+                                            )
+                                        TextField("输入 API Key", text: $apiKey)
+                                            .padding()
+                                    }
+                                    .frame(height: 48)
+                                }
+                            }
+                            .padding()
+                        }
+                        .padding(.horizontal, 16)
+                        
+                        // 保存按钮
+                        Button(action: {
+                            UserDefaults.standard.set(baseURL, forKey: "API_BASE_URL")
+                            UserDefaults.standard.set(model, forKey: "API_MODEL")
+                            UserDefaults.standard.set(apiKey, forKey: "API_KEY")
+                            
+                            showSuccessMessage = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                showSuccessMessage = false
+                            }
+                        }) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color.black)
+                                    .offset(x: 6, y: 6)
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .stroke(Color.black, lineWidth: 4)
+                                    )
+                                Text("保存配置")
+                                    .font(.title)
+                                    .fontWeight(.black)
+                                    .foregroundColor(.black)
+                            }
+                            .frame(height: 64)
+                        }
+                        .padding(.horizontal, 16)
+                        
+                        // 成功消息
+                        if showSuccessMessage {
+                            HStack(spacing: 8) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.title2)
+                                    .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                Text("配置保存成功！")
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                            }
+                            .padding(.top, 8)
                         }
                     }
-                    .padding(.horizontal, 16)
-                    
-                    // 成功消息
-                    if showSuccessMessage {
-                        Text("配置保存成功！")
-                            .foregroundColor(.green)
-                            .font(.headline)
-                            .padding(.top, 16)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                    }
+                    .padding(.top, 16)
                 }
-                .padding()
                 
                 Spacer()
             }

@@ -12,101 +12,196 @@ struct InputView: View {
     
     var body: some View {
         ZStack {
-            Color(red: 1.0, green: 0.99, blue: 0.96) // #FFFDF5
+            Color(red: 0.10, green: 0.14, blue: 0.49)
                 .ignoresSafeArea()
             
-            VStack {
+            VStack(spacing: 0) {
                 // 顶部返回按钮和标题
                 HStack {
                     Button(action: { currentView = "home" })
                     {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color.white)
-                                .frame(width: 40, height: 40)
-                                .neoPopStyle()
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 20))
-                        }
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 20))
+                            .foregroundColor(.black)
+                            .frame(width: 48, height: 48)
+                            .background(Color.white)
+                            .cornerRadius(9999)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .stroke(Color.black, lineWidth: 4)
+                            )
+                            .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                     }
-                    Text("输入食材")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                    VStack(alignment: .leading) {
+                        Text("输入食材")
+                            .font(.largeTitle)
+                            .fontWeight(.black)
+                            .foregroundColor(.white)
+                        Text("告诉 AI 你有什么")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                    }
                     Spacer()
                 }
                 .padding()
+                .padding(.top, 8)
                 
-                // 食材输入框
-                VStack(alignment: .leading) {
-                    Text("冰箱里有什么？")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .padding(.bottom, 8)
-                    TextField("输入食材，用逗号分隔", text: $customIngredients)
-                        .textFieldStyle(.neoPop)
-                        .padding(.bottom, 24)
-                }
-                .padding()
-                
-                // 常用食材标签
-                VStack(alignment: .leading) {
-                    Text("常用食材")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .padding(.bottom, 12)
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 12) {
-                            ForEach(commonIngredients, id: \.self) {
-                                ingredient in
-                                Button(action: {
-                                    if selectedIngredients.contains(ingredient) {
-                                        selectedIngredients.remove(ingredient)
-                                    } else {
-                                        selectedIngredients.insert(ingredient)
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        // 食材输入框
+                        VStack(alignment: .leading) {
+                            Text("冰箱里有什么？")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .padding(.bottom, 8)
+                                .foregroundColor(.black)
+                            
+                            TextField("输入食材，用逗号分隔...", text: $customIngredients)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(9999)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 9999)
+                                        .stroke(Color.black, lineWidth: 3)
+                                )
+                                .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                                .padding(.bottom, 8)
+                            
+                            Text("例如：鸡蛋, 番茄, 洋葱, 青椒")
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.gray)
+                        }
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(24)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24)
+                                .stroke(Color.black, lineWidth: 4)
+                        )
+                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                        .padding(.horizontal, 16)
+                        
+                        // 常用食材标签
+                        VStack(alignment: .leading) {
+                            Text("快速选择")
+                                .font(.headline)
+                                .fontWeight(.black)
+                                .padding(.bottom, 12)
+                                .foregroundColor(.black)
+                            
+                            let emojis = ["🥚", "🍅", "🧅", "🫑", "🥩", "🍗", "🍚", "🍜"]
+                            let ingredientsWithEmojis = Array(zip(commonIngredients, emojis))
+                            
+                            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                                ForEach(ingredientsWithEmojis, id: \.0) {
+                                    ingredient, emoji in
+                                    Button(action: {
+                                        if selectedIngredients.contains(ingredient) {
+                                            selectedIngredients.remove(ingredient)
+                                        } else {
+                                            selectedIngredients.insert(ingredient)
+                                        }
+                                    }) {
+                                        Text("\(emoji) \(ingredient)")
+                                            .font(.subheadline)
+                                            .fontWeight(.bold)
+                                            .padding(.horizontal, 16)
+                                            .padding(.vertical, 8)
+                                            .background(selectedIngredients.contains(ingredient) ? Color(red: 0.8, green: 1.0, blue: 0.0) : Color.white)
+                                            .cornerRadius(9999)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 9999)
+                                                    .stroke(Color.black, lineWidth: 2)
+                                            )
+                                            .shadow(color: Color.black, radius: 0, x: 2, y: 2)
                                     }
-                                }) {
-                                    Text(ingredient)
-                                        .font(.subheadline)
-                                        .neoPopTagStyle(isSelected: selectedIngredients.contains(ingredient))
                                 }
                             }
                         }
-                    }
-                    .padding(.bottom, 32)
-                }
-                .padding()
-                
-                // 错误信息
-                if let errorMessage = errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .font(.subheadline)
-                        .padding(.bottom, 16)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                }
-                
-                // 生成食谱按钮
-                Button(action: { 
-                    generateRecipe()
-                }) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color(red: 0.8, green: 1.0, blue: 0.0)) // #CCFF00
-                            .frame(height: 60)
-                            .neoPopStyle(backgroundColor: Color(red: 0.8, green: 1.0, blue: 0.0))
-                        if isLoading {
-                            ProgressView()
-                                .tint(.black)
-                        } else {
-                            Text("生成食谱")
-                                .font(.title)
-                                .fontWeight(.bold)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(24)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24)
+                                .stroke(Color.black, lineWidth: 4)
+                        )
+                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                        .padding(.horizontal, 16)
+                        
+                        // 已选择食材预览
+                        if !selectedIngredients.isEmpty {
+                            let emojis = ["🥚", "🍅", "🧅", "🫑", "🥩", "🍗", "🍚", "🍜"]
+                            
+                            VStack(alignment: .leading) {
+                                Text("已选择:")
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                    .padding(.bottom, 8)
+                                    .foregroundColor(.black)
+                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
+                                    ForEach(Array(selectedIngredients), id: \.self) { ingredient in
+                                        if let index = commonIngredients.firstIndex(of: ingredient), index < emojis.count {
+                                            Text("\(emojis[index]) \(ingredient)")
+                                                .font(.subheadline)
+                                                .fontWeight(.bold)
+                                                .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                                .padding(.horizontal, 12)
+                                                .padding(.vertical, 6)
+                                                .background(Color.black)
+                                                .cornerRadius(9999)
+                                        }
+                                    }
+                                }
+                            }
+                            .padding()
+                            .background(Color(red: 0.8, green: 1.0, blue: 0.0))
+                            .cornerRadius(24)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .stroke(Color.black, lineWidth: 4)
+                            )
+                            .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                            .padding(.horizontal, 16)
                         }
+                        
+                        // 错误信息
+                        if let errorMessage = errorMessage {
+                            Text(errorMessage)
+                                .foregroundColor(.red)
+                                .font(.subheadline)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                        
+                        // 生成食谱按钮
+                        Button(action: { 
+                            generateRecipe()
+                        }) {
+                            if isLoading {
+                                ProgressView()
+                                    .tint(.black)
+                            } else {
+                                Text("✨ 生成食谱")
+                                    .font(.title)
+                                    .fontWeight(.black)
+                                    .foregroundColor(.black)
+                            }
+                        }
+                        .frame(height: 64)
+                        .frame(maxWidth: .infinity)
+                        .background(Color(red: 0.8, green: 1.0, blue: 0.0))
+                        .cornerRadius(9999)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 9999)
+                                .stroke(Color.black, lineWidth: 4)
+                        )
+                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                        .padding(.horizontal, 16)
+                        .disabled(isLoading)
                     }
+                    .padding(.top, 16)
                 }
-                .padding(.horizontal, 16)
-                .disabled(isLoading)
                 
                 Spacer()
             }

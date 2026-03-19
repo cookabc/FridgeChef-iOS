@@ -9,93 +9,225 @@ struct ResultView: View {
     
     var body: some View {
         ZStack {
-            Color(red: 1.0, green: 0.99, blue: 0.96) // #FFFDF5
+            Color(red: 0.10, green: 0.14, blue: 0.49)
                 .ignoresSafeArea()
             
-            ScrollView {
-                VStack {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 0) {
                     // 顶部返回按钮和标题
                     HStack {
                         Button(action: { currentView = "home" })
                         {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color.white)
-                                    .frame(width: 40, height: 40)
-                                    .neoPopStyle()
-                                Image(systemName: "chevron.left")
-                                    .font(.system(size: 20))
-                            }
+                            Image(systemName: "house")
+                                .font(.system(size: 20))
+                                .foregroundColor(.black)
+                                .frame(width: 48, height: 48)
+                                .background(Color.white)
+                                .cornerRadius(9999)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 9999)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
+                                .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                         }
-                        Text("食谱结果")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
+                        VStack(alignment: .leading) {
+                            Text("食谱详情")
+                                .font(.largeTitle)
+                                .fontWeight(.black)
+                                .foregroundColor(.white)
+                            Text("AI 为你生成的食谱")
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                        }
                         Spacer()
                     }
                     .padding()
+                    .padding(.top, 8)
                     
-                    // 食谱卡片
-                    VStack(alignment: .leading) {
-                        // 菜名
-                        Text(recipe.dishName)
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .padding(.bottom, 16)
-                        
-                        // 食材列表
-                        Text("食材")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .padding(.bottom, 8)
-                        ForEach(recipe.ingredients, id: \.self) {
-                            ingredient in
-                            HStack {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.green)
-                                Text(ingredient)
-                                    .font(.body)
+                    // 食谱标题卡片
+                    VStack(alignment: .leading, spacing: 16) {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color.black)
+                                    .frame(width: 80, height: 80)
+                                Text("🍳")
+                                    .font(.system(size: 40))
                             }
-                            .padding(.bottom, 4)
-                        }
-                        
-                        // 制作步骤
-                        Text("制作步骤")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .padding(.top, 16)
-                            .padding(.bottom, 8)
-                        ForEach(recipe.steps.indices, id: \.self) {
-                            index in
-                            VStack(alignment: .leading) {
-                                Text("步骤 \(index + 1)")
-                                    .font(.subheadline)
-                                    .fontWeight(.bold)
-                                Text(recipe.steps[index])
-                                    .font(.body)
-                                    .padding(.bottom, 12)
+                            
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(recipe.dishName)
+                                    .font(.title)
+                                    .fontWeight(.black)
+                                    .foregroundColor(.black)
+                                
+                                HStack(spacing: 8) {
+                                    Text("简单")
+                                        .font(.caption)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 4)
+                                        .background(Color.black)
+                                        .cornerRadius(9999)
+                                    
+                                    Text("15 分钟")
+                                        .font(.caption)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.black)
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 4)
+                                        .background(Color.white)
+                                        .cornerRadius(9999)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 9999)
+                                                .stroke(Color.black, lineWidth: 2)
+                                        )
+                                }
                             }
                         }
                     }
                     .padding()
-                    .neoPopStyle()
-                    .padding()
+                    .background(Color(red: 0.8, green: 1.0, blue: 0.0))
+                    .cornerRadius(24)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24)
+                            .stroke(Color.black, lineWidth: 4)
+                    )
+                    .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 16)
                     
-                    // 保存按钮
-                    Button(action: {
-                        saveRecipe()
-                    }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color(red: 0.8, green: 1.0, blue: 0.0)) // #CCFF00
-                                .frame(height: 60)
-                                .neoPopStyle(backgroundColor: Color(red: 0.8, green: 1.0, blue: 0.0))
-                            Text(isSaved ? "已保存" : "保存食谱")
-                                .font(.title)
-                                .fontWeight(.bold)
+                    // 食材列表卡片
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("🥬 所需食材")
+                            .font(.title)
+                            .fontWeight(.black)
+                            .foregroundColor(.black)
+                        
+                        VStack(spacing: 12) {
+                            ForEach(recipe.ingredients, id: \.self) { ingredient in
+                                HStack(spacing: 12) {
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                            .frame(width: 24, height: 24)
+                                            .overlay(
+                                                Circle()
+                                                    .stroke(Color.black, lineWidth: 2)
+                                            )
+                                        Image(systemName: "checkmark")
+                                            .font(.system(size: 12, weight: .bold))
+                                            .foregroundColor(.black)
+                                    }
+                                    
+                                    Text(ingredient)
+                                        .font(.body)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.black)
+                                    
+                                    Spacer()
+                                    
+                                    Text("✓ 你有")
+                                        .font(.caption)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                }
+                            }
                         }
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(24)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24)
+                            .stroke(Color.black, lineWidth: 4)
+                    )
+                    .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 16)
+                    
+                    // 制作步骤卡片
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("👨‍🍳 制作步骤")
+                            .font(.title)
+                            .fontWeight(.black)
+                            .foregroundColor(.black)
+                        
+                        VStack(spacing: 16) {
+                            ForEach(recipe.steps.indices, id: \.self) { index in
+                                HStack(alignment: .top, spacing: 16) {
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color.black)
+                                            .frame(width: 40, height: 40)
+                                        Text("\(index + 1)")
+                                            .font(.title3)
+                                            .fontWeight(.black)
+                                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    }
+                                    
+                                    Text(recipe.steps[index])
+                                        .font(.body)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.black)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
+                        }
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(24)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24)
+                            .stroke(Color.black, lineWidth: 4)
+                    )
+                    .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 16)
+                    
+                    // 操作按钮
+                    HStack(spacing: 16) {
+                        Button(action: {
+                            // 重新生成
+                        }) {
+                            Text("🔄 重新生成")
+                                .font(.title3)
+                                .fontWeight(.black)
+                                .foregroundColor(.black)
+                        }
+                        .frame(height: 56)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white)
+                        .cornerRadius(9999)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 9999)
+                                .stroke(Color.black, lineWidth: 4)
+                        )
+                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                        
+                        Button(action: {
+                            saveRecipe()
+                        }) {
+                            Text(isSaved ? "✅ 已保存" : "💾 保存食谱")
+                                .font(.title3)
+                                .fontWeight(.black)
+                                .foregroundColor(.black)
+                        }
+                        .frame(height: 56)
+                        .frame(maxWidth: .infinity)
+                        .background(Color(red: 0.8, green: 1.0, blue: 0.0))
+                        .cornerRadius(9999)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 9999)
+                                .stroke(Color.black, lineWidth: 4)
+                        )
+                        .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                     }
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 32)
+                    .padding(.bottom, 24)
                 }
             }
         }
@@ -124,9 +256,15 @@ struct ResultView: View {
 struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
         let mockRecipe = RecipeModel(
-            dishName: "番茄炒蛋",
-            ingredients: ["番茄", "鸡蛋", "葱花", "盐", "糖"],
-            steps: ["1. 番茄切块", "2. 鸡蛋打散", "3. 热锅倒油", "4. 炒鸡蛋", "5. 加入番茄翻炒", "6. 调味出锅"]
+            dishName: "番茄鸡蛋炒饭",
+            ingredients: ["鸡蛋 2个", "番茄 1个", "米饭 1碗", "葱花 适量", "盐 适量"],
+            steps: [
+                "鸡蛋打散，加入少许盐搅拌均匀。番茄洗净切小块备用。",
+                "热锅凉油，倒入蛋液快速炒散，盛出备用。",
+                "锅中再加少许油，放入番茄块炒出汁水。",
+                "倒入米饭翻炒均匀，再加入炒好的鸡蛋。",
+                "加盐调味，撒上葱花即可出锅。"
+            ]
         )
         
         ResultView(recipe: mockRecipe, currentView: .constant("result"))
