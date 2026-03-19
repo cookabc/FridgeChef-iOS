@@ -11,7 +11,7 @@ struct SettingsView: View {
     
     var body: some View {
         ZStack {
-            Color(red: 0.10, green: 0.14, blue: 0.49)
+            AppColors.background
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -21,17 +21,17 @@ struct SettingsView: View {
                     {
                         ZStack {
                             RoundedRectangle(cornerRadius: 9999)
-                                .fill(Color.black)
+                                .fill(AppColors.shadow)
                                 .offset(x: 6, y: 6)
                             RoundedRectangle(cornerRadius: 9999)
-                                .fill(Color.white)
+                                .fill(AppColors.cardBackground)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 9999)
-                                        .stroke(Color.black, lineWidth: 4)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
                                 )
                             Image(systemName: "chevron.left")
                                 .font(.system(size: 20))
-                                .foregroundColor(.black)
+                                .foregroundColor(AppColors.primaryText)
                         }
                         .frame(width: 48, height: 48)
                     }
@@ -39,11 +39,11 @@ struct SettingsView: View {
                         Text("settings.title".localized)
                             .font(.largeTitle)
                             .fontWeight(.black)
-                            .foregroundColor(.white)
+                            .foregroundColor(AppColors.primaryText)
                         Text("settings.subtitle".localized)
                             .font(.headline)
                             .fontWeight(.bold)
-                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                            .foregroundColor(AppColors.accent)
                     }
                     Spacer()
                 }
@@ -55,20 +55,20 @@ struct SettingsView: View {
                         // 语言设置卡片
                         ZStack {
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.black)
+                                .fill(AppColors.shadow)
                                 .offset(x: 6, y: 6)
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.white)
+                                .fill(AppColors.cardBackground)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 24)
-                                        .stroke(Color.black, lineWidth: 4)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
                                 )
                             
                             VStack(alignment: .leading, spacing: 16) {
                                 Text("settings.language".localized)
                                     .font(.headline)
                                     .fontWeight(.black)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(AppColors.primaryText)
                                 
                                 Picker("settings.language".localized, selection: $settings.language) {
                                     ForEach(AppLanguage.allCases) { language in
@@ -85,20 +85,20 @@ struct SettingsView: View {
                         // 主题设置卡片
                         ZStack {
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.black)
+                                .fill(AppColors.shadow)
                                 .offset(x: 6, y: 6)
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.white)
+                                .fill(AppColors.cardBackground)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 24)
-                                        .stroke(Color.black, lineWidth: 4)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
                                 )
                             
                             VStack(alignment: .leading, spacing: 16) {
                                 Text("settings.theme".localized)
                                     .font(.headline)
                                     .fontWeight(.black)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(AppColors.primaryText)
                                 
                                 Picker("settings.theme".localized, selection: $settings.theme) {
                                     ForEach(AppTheme.allCases) { theme in
@@ -115,39 +115,40 @@ struct SettingsView: View {
                         // API 配置卡片
                         ZStack {
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.black)
+                                .fill(AppColors.shadow)
                                 .offset(x: 6, y: 6)
                             RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.white)
+                                .fill(AppColors.cardBackground)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 24)
-                                        .stroke(Color.black, lineWidth: 4)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
                                 )
                             
                             VStack(alignment: .leading, spacing: 24) {
                                 Text("API")
                                     .font(.headline)
                                     .fontWeight(.black)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(AppColors.primaryText)
                                 
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text("settings.base.url".localized)
                                         .font(.subheadline)
                                         .fontWeight(.bold)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(AppColors.primaryText)
                                     
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .fill(Color.black)
+                                            .fill(AppColors.shadow)
                                             .offset(x: 6, y: 6)
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .fill(Color.white)
+                                            .fill(AppColors.cardBackground)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(Color.black, lineWidth: 3)
+                                                    .stroke(AppColors.primaryText, lineWidth: 3)
                                             )
                                         TextField("settings.placeholder.url".localized, text: $baseURL)
                                             .padding()
+                                            .foregroundColor(AppColors.primaryText)
                                     }
                                     .frame(height: 48)
                                 }
@@ -156,20 +157,21 @@ struct SettingsView: View {
                                     Text("settings.model".localized)
                                         .font(.subheadline)
                                         .fontWeight(.bold)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(AppColors.primaryText)
                                     
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .fill(Color.black)
+                                            .fill(AppColors.shadow)
                                             .offset(x: 6, y: 6)
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .fill(Color.white)
+                                            .fill(AppColors.cardBackground)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(Color.black, lineWidth: 3)
+                                                    .stroke(AppColors.primaryText, lineWidth: 3)
                                             )
                                         TextField("settings.placeholder.model".localized, text: $model)
                                             .padding()
+                                            .foregroundColor(AppColors.primaryText)
                                     }
                                     .frame(height: 48)
                                 }
@@ -178,20 +180,21 @@ struct SettingsView: View {
                                     Text("settings.api.key".localized)
                                         .font(.subheadline)
                                         .fontWeight(.bold)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(AppColors.primaryText)
                                     
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .fill(Color.black)
+                                            .fill(AppColors.shadow)
                                             .offset(x: 6, y: 6)
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .fill(Color.white)
+                                            .fill(AppColors.cardBackground)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(Color.black, lineWidth: 3)
+                                                    .stroke(AppColors.primaryText, lineWidth: 3)
                                             )
                                         TextField("settings.placeholder.key".localized, text: $apiKey)
                                             .padding()
+                                            .foregroundColor(AppColors.primaryText)
                                     }
                                     .frame(height: 48)
                                 }
@@ -213,13 +216,13 @@ struct SettingsView: View {
                         }) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color.black)
+                                    .fill(AppColors.shadow)
                                     .offset(x: 6, y: 6)
                                 RoundedRectangle(cornerRadius: 9999)
-                                    .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    .fill(AppColors.accent)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(Color.black, lineWidth: 4)
+                                            .stroke(AppColors.primaryText, lineWidth: 4)
                                     )
                                 Text("settings.save".localized)
                                     .font(.title)
@@ -235,11 +238,11 @@ struct SettingsView: View {
                             HStack(spacing: 8) {
                                 Image(systemName: "checkmark.circle.fill")
                                     .font(.title2)
-                                    .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                    .foregroundColor(AppColors.accent)
                                 Text("settings.save.success".localized)
                                     .font(.headline)
                                     .fontWeight(.bold)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(AppColors.primaryText)
                             }
                             .padding(.top, 8)
                         }
