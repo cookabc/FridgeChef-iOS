@@ -10,7 +10,7 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            Color.deepRoyalBlue
+            Color(red: 0.10, green: 0.14, blue: 0.49)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -24,18 +24,28 @@ struct HomeView: View {
                         Text("FridgeChef")
                             .font(.headline)
                             .fontWeight(.bold)
-                            .foregroundColor(.acidGreen)
+                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
                     }
                     Spacer()
                     Button(action: { currentView = "settings" })
                     {
                         ZStack {
-                            Image(systemName: "gearshape.2")
+                            // 阴影层
+                            RoundedRectangle(cornerRadius: 9999)
+                                .fill(Color.black)
+                                .offset(x: 6, y: 6)
+                            // 内容层
+                            RoundedRectangle(cornerRadius: 9999)
+                                .fill(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 9999)
+                                        .stroke(Color.black, lineWidth: 4)
+                                )
+                            Image(systemName: "gearshape")
                                 .font(.system(size: 20))
                                 .foregroundColor(.black)
                         }
                         .frame(width: 48, height: 48)
-                        .neoPopStyle(backgroundColor: .white, cornerRadius: 9999)
                     }
                 }
                 .padding()
@@ -45,10 +55,19 @@ struct HomeView: View {
                 Button(action: { currentView = "input" })
                 {
                     ZStack {
+                        // 阴影层
                         RoundedRectangle(cornerRadius: 24)
-                            .fill(Color.acidGreen)
-                            .frame(height: 180)
-                            .neoPopStyle(backgroundColor: .acidGreen, cornerRadius: 24)
+                            .fill(Color.black)
+                            .offset(x: 6, y: 6)
+                        
+                        // 内容层
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .stroke(Color.black, lineWidth: 4)
+                            )
+                        
                         VStack(alignment: .leading, spacing: 12) {
                             HStack(alignment: .center) {
                                 VStack(alignment: .leading, spacing: 8) {
@@ -71,7 +90,7 @@ struct HomeView: View {
                                         .frame(width: 64, height: 64)
                                     Image(systemName: "plus")
                                         .font(.system(size: 36))
-                                        .foregroundColor(.acidGreen)
+                                        .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
                                 }
                                 .padding(.leading, 16)
                             }
@@ -84,17 +103,24 @@ struct HomeView: View {
                         }
                         .padding(.horizontal, 36)
                     }
+                    .frame(height: 180)
                 }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
                 
                 // 统计数据
                 HStack(spacing: 16) {
+                    // 已生成食谱
                     ZStack {
                         RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.black)
+                            .offset(x: 6, y: 6)
+                        RoundedRectangle(cornerRadius: 24)
                             .fill(Color.white)
-                            .frame(height: 100)
-                            .neoPopStyle(backgroundColor: .white, cornerRadius: 24)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .stroke(Color.black, lineWidth: 4)
+                            )
                         VStack {
                             Text("已生成食谱")
                                 .font(.caption)
@@ -106,13 +132,20 @@ struct HomeView: View {
                                 .foregroundColor(.black)
                         }
                     }
-                    .flexibleFrame()
+                    .frame(height: 100)
+                    .frame(maxWidth: .infinity)
                     
+                    // 节省食材
                     ZStack {
                         RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.black)
+                            .offset(x: 6, y: 6)
+                        RoundedRectangle(cornerRadius: 24)
                             .fill(Color.white)
-                            .frame(height: 100)
-                            .neoPopStyle(backgroundColor: .white, cornerRadius: 24)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .stroke(Color.black, lineWidth: 4)
+                            )
                         VStack {
                             Text("节省食材")
                                 .font(.caption)
@@ -124,7 +157,8 @@ struct HomeView: View {
                                 .foregroundColor(.black)
                         }
                     }
-                    .flexibleFrame()
+                    .frame(height: 100)
+                    .frame(maxWidth: .infinity)
                 }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
@@ -141,7 +175,7 @@ struct HomeView: View {
                         Text("查看全部")
                             .font(.subheadline)
                             .fontWeight(.bold)
-                            .foregroundColor(.acidGreen)
+                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
                     }
                 }
                 .padding(.horizontal, 16)
@@ -154,9 +188,15 @@ struct HomeView: View {
                             ForEach(recipes) { recipe in
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 24)
+                                        .fill(Color.black)
+                                        .offset(x: 6, y: 6)
+                                    RoundedRectangle(cornerRadius: 24)
                                         .fill(Color.white)
-                                        .frame(height: 120)
-                                        .neoPopStyle(backgroundColor: .white, cornerRadius: 24)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 24)
+                                                .stroke(Color.black, lineWidth: 4)
+                                        )
+                                    
                                     HStack(spacing: 16) {
                                         // 食谱图标
                                         ZStack {
@@ -189,7 +229,7 @@ struct HomeView: View {
                                                         .foregroundColor(.black)
                                                         .padding(.horizontal, 12)
                                                         .padding(.vertical, 4)
-                                                        .background(Color.acidGreen)
+                                                        .background(Color(red: 0.8, green: 1.0, blue: 0.0))
                                                         .cornerRadius(9999)
                                                         .overlay(
                                                             RoundedRectangle(cornerRadius: 9999)
@@ -212,7 +252,7 @@ struct HomeView: View {
                                                 }
                                             }
                                         }
-                                        .flexibleFrame()
+                                        .frame(maxWidth: .infinity)
                                         
                                         // 箭头
                                         Image(systemName: "chevron.right")
@@ -221,6 +261,7 @@ struct HomeView: View {
                                     }
                                     .padding()
                                 }
+                                .frame(height: 120)
                                 .padding(.horizontal, 16)
                             }
                         }
@@ -230,9 +271,15 @@ struct HomeView: View {
                     // 空状态提示
                     ZStack {
                         RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.black)
+                            .offset(x: 6, y: 6)
+                        RoundedRectangle(cornerRadius: 24)
                             .fill(Color.white)
-                            .frame(height: 200)
-                            .neoPopStyle(backgroundColor: .white, cornerRadius: 24)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .stroke(Color.black, lineWidth: 4)
+                            )
+                        
                         VStack {
                             Image(systemName: "clipboard")
                                 .font(.system(size: 60))
@@ -248,6 +295,7 @@ struct HomeView: View {
                                 .padding(.top, 8)
                         }
                     }
+                    .frame(height: 200)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 24)
                 }
@@ -275,13 +323,6 @@ struct HomeView: View {
         let emojis = ["🍅", "🥘", "🍜", "🍳", "🥗", "🍝", "🍲", "🍛"]
         let index = Int(recipe.id?.hashValue ?? 0) % emojis.count
         return emojis[abs(index)]
-    }
-}
-
-// MARK: - View Extensions
-private extension View {
-    func flexibleFrame() -> some View {
-        self.frame(maxWidth: .infinity)
     }
 }
 
