@@ -18,17 +18,21 @@ struct ResultView: View {
                     HStack {
                         Button(action: { currentView = "home" })
                         {
-                            Image(systemName: "house")
-                                .font(.system(size: 20))
-                                .foregroundColor(.black)
-                                .frame(width: 48, height: 48)
-                                .background(Color.white)
-                                .cornerRadius(9999)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9999)
-                                        .stroke(Color.black, lineWidth: 4)
-                                )
-                                .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color.black)
+                                    .offset(x: 6, y: 6)
+                                RoundedRectangle(cornerRadius: 9999)
+                                    .fill(Color.white)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .stroke(Color.black, lineWidth: 4)
+                                    )
+                                Image(systemName: "house")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.black)
+                            }
+                            .frame(width: 48, height: 48)
                         }
                         VStack(alignment: .leading) {
                             Text("食谱详情")
@@ -46,145 +50,160 @@ struct ResultView: View {
                     .padding(.top, 8)
                     
                     // 食谱标题卡片
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack(spacing: 16) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color.black)
-                                    .frame(width: 80, height: 80)
-                                Text("🍳")
-                                    .font(.system(size: 40))
-                            }
-                            
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(recipe.dishName)
-                                    .font(.title)
-                                    .fontWeight(.black)
-                                    .foregroundColor(.black)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.black)
+                            .offset(x: 6, y: 6)
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .stroke(Color.black, lineWidth: 4)
+                            )
+                        
+                        VStack(alignment: .leading, spacing: 16) {
+                            HStack(spacing: 16) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(Color.black)
+                                        .frame(width: 80, height: 80)
+                                    Text("🍳")
+                                        .font(.system(size: 40))
+                                }
                                 
-                                HStack(spacing: 8) {
-                                    Text("简单")
-                                        .font(.caption)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 4)
-                                        .background(Color.black)
-                                        .cornerRadius(9999)
-                                    
-                                    Text("15 分钟")
-                                        .font(.caption)
-                                        .fontWeight(.bold)
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(recipe.dishName)
+                                        .font(.title)
+                                        .fontWeight(.black)
                                         .foregroundColor(.black)
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 4)
-                                        .background(Color.white)
-                                        .cornerRadius(9999)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 9999)
-                                                .stroke(Color.black, lineWidth: 2)
-                                        )
+                                    
+                                    HStack(spacing: 8) {
+                                        Text("简单")
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 4)
+                                            .background(Color.black)
+                                            .cornerRadius(9999)
+                                        
+                                        Text("15 分钟")
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.black)
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 4)
+                                            .background(Color.white)
+                                            .cornerRadius(9999)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 9999)
+                                                    .stroke(Color.black, lineWidth: 2)
+                                            )
+                                    }
                                 }
                             }
                         }
+                        .padding()
                     }
-                    .padding()
-                    .background(Color(red: 0.8, green: 1.0, blue: 0.0))
-                    .cornerRadius(24)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 24)
-                            .stroke(Color.black, lineWidth: 4)
-                    )
-                    .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 16)
                     
                     // 食材列表卡片
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text("🥬 所需食材")
-                            .font(.title)
-                            .fontWeight(.black)
-                            .foregroundColor(.black)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.black)
+                            .offset(x: 6, y: 6)
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .stroke(Color.black, lineWidth: 4)
+                            )
                         
-                        VStack(spacing: 12) {
-                            ForEach(recipe.ingredients, id: \.self) { ingredient in
-                                HStack(spacing: 12) {
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
-                                            .frame(width: 24, height: 24)
-                                            .overlay(
-                                                Circle()
-                                                    .stroke(Color.black, lineWidth: 2)
-                                            )
-                                        Image(systemName: "checkmark")
-                                            .font(.system(size: 12, weight: .bold))
+                        VStack(alignment: .leading, spacing: 16) {
+                            Text("🥬 所需食材")
+                                .font(.title)
+                                .fontWeight(.black)
+                                .foregroundColor(.black)
+                            
+                            VStack(spacing: 12) {
+                                ForEach(recipe.ingredients, id: \.self) { ingredient in
+                                    HStack(spacing: 12) {
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                                .frame(width: 24, height: 24)
+                                                .overlay(
+                                                    Circle()
+                                                        .stroke(Color.black, lineWidth: 2)
+                                                )
+                                            Image(systemName: "checkmark")
+                                                .font(.system(size: 12, weight: .bold))
+                                                .foregroundColor(.black)
+                                        }
+                                        
+                                        Text(ingredient)
+                                            .font(.body)
+                                            .fontWeight(.bold)
                                             .foregroundColor(.black)
+                                        
+                                        Spacer()
+                                        
+                                        Text("✓ 你有")
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
                                     }
-                                    
-                                    Text(ingredient)
-                                        .font(.body)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.black)
-                                    
-                                    Spacer()
-                                    
-                                    Text("✓ 你有")
-                                        .font(.caption)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
                                 }
                             }
                         }
+                        .padding()
                     }
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(24)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 24)
-                            .stroke(Color.black, lineWidth: 4)
-                    )
-                    .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 16)
                     
                     // 制作步骤卡片
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text("👨‍🍳 制作步骤")
-                            .font(.title)
-                            .fontWeight(.black)
-                            .foregroundColor(.black)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.black)
+                            .offset(x: 6, y: 6)
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 24)
+                                    .stroke(Color.black, lineWidth: 4)
+                            )
                         
-                        VStack(spacing: 16) {
-                            ForEach(recipe.steps.indices, id: \.self) { index in
-                                HStack(alignment: .top, spacing: 16) {
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color.black)
-                                            .frame(width: 40, height: 40)
-                                        Text("\(index + 1)")
-                                            .font(.title3)
-                                            .fontWeight(.black)
-                                            .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                        VStack(alignment: .leading, spacing: 16) {
+                            Text("👨‍🍳 制作步骤")
+                                .font(.title)
+                                .fontWeight(.black)
+                                .foregroundColor(.black)
+                            
+                            VStack(spacing: 16) {
+                                ForEach(recipe.steps.indices, id: \.self) { index in
+                                    HStack(alignment: .top, spacing: 16) {
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color.black)
+                                                .frame(width: 40, height: 40)
+                                            Text("\(index + 1)")
+                                                .font(.title3)
+                                                .fontWeight(.black)
+                                                .foregroundColor(Color(red: 0.8, green: 1.0, blue: 0.0))
+                                        }
+                                        
+                                        Text(recipe.steps[index])
+                                            .font(.body)
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.black)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
                                     }
-                                    
-                                    Text(recipe.steps[index])
-                                        .font(.body)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.black)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                             }
                         }
+                        .padding()
                     }
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(24)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 24)
-                            .stroke(Color.black, lineWidth: 4)
-                    )
-                    .shadow(color: Color.black, radius: 0, x: 6, y: 6)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 16)
                     
