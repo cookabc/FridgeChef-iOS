@@ -30,7 +30,7 @@ struct HomeView: View {
                     Button(action: { currentView = "settings" })
                     {
                         ZStack {
-                            Image(systemName: "gear")
+                            Image(systemName: "gearshape.2")
                                 .font(.system(size: 20))
                                 .foregroundColor(.black)
                         }

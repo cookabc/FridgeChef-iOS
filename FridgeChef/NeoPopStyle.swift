@@ -10,7 +10,7 @@ public extension Color {
 struct NeoPopStyle: ViewModifier {
     let backgroundColor: Color
     let cornerRadius: CGFloat
-    let borderWidth: CGFloat = 3
+    let borderWidth: CGFloat = 4
     let shadowOffset: CGFloat = 6
     
     func body(content: Content) -> some View {
