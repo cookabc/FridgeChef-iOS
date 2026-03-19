@@ -11,7 +11,7 @@ struct NeoPopStyle: ViewModifier {
     let backgroundColor: Color
     let cornerRadius: CGFloat
     let borderWidth: CGFloat = 3
-    let shadowOffset: CGFloat = 4
+    let shadowOffset: CGFloat = 6
     
     func body(content: Content) -> some View {
         content
@@ -58,8 +58,8 @@ struct NeoPopButtonStyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(Color.black, lineWidth: 3)
             )
-            .shadow(color: Color.black, radius: 0, x: 4, y: 4)
-            .offset(x: configuration.isPressed ? 4 : 0, y: configuration.isPressed ? 4 : 0)
+            .shadow(color: Color.black, radius: 0, x: 6, y: 6)
+            .offset(x: configuration.isPressed ? 6 : 0, y: configuration.isPressed ? 6 : 0)
     }
 }
 
@@ -82,7 +82,7 @@ struct NeoPopTextFieldStyle: TextFieldStyle {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(Color.black, lineWidth: 3)
             )
-            .shadow(color: Color.black, radius: 0, x: 4, y: 4)
+            .shadow(color: Color.black, radius: 0, x: 6, y: 6)
     }
 }
 
