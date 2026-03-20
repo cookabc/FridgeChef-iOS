@@ -97,55 +97,28 @@ struct HomeView: View {
                 .padding(.bottom, 24)
                 
                 // 统计数据
-                HStack(spacing: 16) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.shadow)
-                            .offset(x: 6, y: 6)
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.cardBackground)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .stroke(AppColors.primaryText, lineWidth: 4)
-                            )
-                        VStack {
-                            Text("home.generated.recipes".localized)
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(AppColors.secondaryText)
-                            Text("\(recipes.count)")
-                                .font(.largeTitle)
-                                .fontWeight(.black)
-                                .foregroundColor(AppColors.primaryText)
-                        }
+                ZStack {
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(AppColors.shadow)
+                        .offset(x: 6, y: 6)
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(AppColors.cardBackground)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24)
+                                .stroke(AppColors.primaryText, lineWidth: 4)
+                        )
+                    VStack {
+                        Text("home.generated.recipes".localized)
+                            .font(.caption)
+                            .fontWeight(.bold)
+                            .foregroundColor(AppColors.secondaryText)
+                        Text("\(recipes.count)")
+                            .font(.largeTitle)
+                            .fontWeight(.black)
+                            .foregroundColor(AppColors.primaryText)
                     }
-                    .frame(height: 100)
-                    .frame(maxWidth: .infinity)
-                    
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.shadow)
-                            .offset(x: 6, y: 6)
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.cardBackground)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .stroke(AppColors.primaryText, lineWidth: 4)
-                            )
-                        VStack {
-                            Text("home.saved.ingredients".localized)
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(AppColors.secondaryText)
-                            Text("8")
-                                .font(.largeTitle)
-                                .fontWeight(.black)
-                                .foregroundColor(AppColors.primaryText)
-                        }
-                    }
-                    .frame(height: 100)
-                    .frame(maxWidth: .infinity)
                 }
+                .frame(height: 100)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 24)
                 
@@ -154,9 +127,11 @@ struct HomeView: View {
                     Text("home.history".localized)
                         .font(.headline)
                         .fontWeight(.black)
-                        .foregroundColor(AppColors.primaryText)
+                        .foregroundColor(AppColors.accent)
                     Spacer()
-                    Button(action: {})
+                    Button(action: {
+                        // 查看全部功能待实现
+                    })
                     {
                         Text("home.view.all".localized)
                             .font(.subheadline)
@@ -172,79 +147,83 @@ struct HomeView: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 16) {
                             ForEach(recipes) { recipe in
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .fill(AppColors.shadow)
-                                        .offset(x: 6, y: 6)
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .fill(AppColors.cardBackground)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 24)
-                                                .stroke(AppColors.primaryText, lineWidth: 4)
-                                        )
-                                    
-                                    HStack(spacing: 16) {
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 16)
-                                                .fill(getIconColor(for: recipe))
-                                                .frame(width: 80, height: 80)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 16)
-                                                        .stroke(AppColors.primaryText, lineWidth: 3)
-                                                )
-                                            Text(getFoodEmoji(for: recipe))
-                                                .font(.system(size: 32))
-                                        }
+                                Button(action: {
+                                    // 查看食谱详情功能待实现
+                                }) {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 24)
+                                            .fill(AppColors.shadow)
+                                            .offset(x: 6, y: 6)
+                                        RoundedRectangle(cornerRadius: 24)
+                                            .fill(AppColors.cardBackground)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 24)
+                                                    .stroke(AppColors.primaryText, lineWidth: 4)
+                                            )
                                         
-                                        VStack(alignment: .leading, spacing: 8) {
-                                            Text(recipe.name ?? "未知菜名")
-                                                .font(.headline)
-                                                .fontWeight(.bold)
-                                                .foregroundColor(AppColors.primaryText)
-                                            Text(recipe.desc ?? "")
-                                                .font(.subheadline)
-                                                .foregroundColor(AppColors.secondaryText)
-                                                .lineLimit(1)
-                                            HStack(spacing: 8) {
-                                                if let difficulty = recipe.difficulty {
-                                                    Text(difficulty)
-                                                        .font(.caption)
-                                                        .fontWeight(.bold)
-                                                        .foregroundColor(.black)
-                                                        .padding(.horizontal, 12)
-                                                        .padding(.vertical, 4)
-                                                        .background(AppColors.accent)
-                                                        .cornerRadius(9999)
-                                                        .overlay(
-                                                            RoundedRectangle(cornerRadius: 9999)
-                                                                .stroke(AppColors.primaryText, lineWidth: 2)
-                                                        )
-                                                }
-                                                if let cookTime = recipe.cookTime {
-                                                    Text(cookTime)
-                                                        .font(.caption)
-                                                        .fontWeight(.bold)
-                                                        .foregroundColor(AppColors.primaryText)
-                                                        .padding(.horizontal, 12)
-                                                        .padding(.vertical, 4)
-                                                        .background(AppColors.cardBackground)
-                                                        .cornerRadius(9999)
-                                                        .overlay(
-                                                            RoundedRectangle(cornerRadius: 9999)
-                                                                .stroke(AppColors.primaryText, lineWidth: 2)
-                                                        )
+                                        HStack(spacing: 16) {
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .fill(getIconColor(for: recipe))
+                                                    .frame(width: 80, height: 80)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 16)
+                                                            .stroke(AppColors.primaryText, lineWidth: 3)
+                                                    )
+                                                Text(getFoodEmoji(for: recipe))
+                                                    .font(.system(size: 32))
+                                            }
+                                            
+                                            VStack(alignment: .leading, spacing: 8) {
+                                                Text(recipe.name ?? "未知菜名")
+                                                    .font(.headline)
+                                                    .fontWeight(.bold)
+                                                    .foregroundColor(AppColors.primaryText)
+                                                Text(recipe.desc ?? "")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(AppColors.secondaryText)
+                                                    .lineLimit(1)
+                                                HStack(spacing: 8) {
+                                                    if let difficulty = recipe.difficulty {
+                                                        Text(difficulty)
+                                                            .font(.caption)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.black)
+                                                            .padding(.horizontal, 12)
+                                                            .padding(.vertical, 4)
+                                                            .background(AppColors.accent)
+                                                            .cornerRadius(9999)
+                                                            .overlay(
+                                                                RoundedRectangle(cornerRadius: 9999)
+                                                                    .stroke(AppColors.primaryText, lineWidth: 2)
+                                                            )
+                                                    }
+                                                    if let cookTime = recipe.cookTime {
+                                                        Text(cookTime)
+                                                            .font(.caption)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(AppColors.primaryText)
+                                                            .padding(.horizontal, 12)
+                                                            .padding(.vertical, 4)
+                                                            .background(AppColors.cardBackground)
+                                                            .cornerRadius(9999)
+                                                            .overlay(
+                                                                RoundedRectangle(cornerRadius: 9999)
+                                                                    .stroke(AppColors.primaryText, lineWidth: 2)
+                                                            )
+                                                    }
                                                 }
                                             }
+                                            .frame(maxWidth: .infinity)
+                                            
+                                            Image(systemName: "chevron.right")
+                                                .font(.system(size: 20))
+                                                .foregroundColor(AppColors.primaryText)
                                         }
-                                        .frame(maxWidth: .infinity)
-                                        
-                                        Image(systemName: "chevron.right")
-                                            .font(.system(size: 20))
-                                            .foregroundColor(AppColors.primaryText)
+                                        .padding()
                                     }
-                                    .padding()
+                                    .frame(height: 120)
                                 }
-                                .frame(height: 120)
                                 .padding(.horizontal, 16)
                             }
                         }
