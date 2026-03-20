@@ -13,6 +13,7 @@ struct FridgeChefApp: App {
     let persistenceController = PersistenceController.shared
     @State private var currentView: String = "home"
     @State private var generatedRecipe: RecipeModel? = nil
+    @State private var selectedRecipeId: UUID? = nil
     @ObservedObject private var settings = AppSettings.shared
     @State private var languageRefresh = UUID()
 
@@ -20,7 +21,7 @@ struct FridgeChefApp: App {
         WindowGroup {
             Group {
                 if currentView == "home" {
-                    HomeView(currentView: $currentView)
+                    HomeView(currentView: $currentView, selectedRecipeId: $selectedRecipeId)
                         .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 } else if currentView == "input" {
                     InputView(currentView: $currentView, generatedRecipe: $generatedRecipe)
@@ -30,12 +31,31 @@ struct FridgeChefApp: App {
                         ResultView(recipe: recipe, currentView: $currentView)
                             .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     } else {
-                        HomeView(currentView: $currentView)
+                        HomeView(currentView: $currentView, selectedRecipeId: $selectedRecipeId)
                             .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     }
                 } else if currentView == "settings" {
                     SettingsView(currentView: $currentView)
                         .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                } else if currentView == "allRecipes" {
+                    AllRecipesView(currentView: $currentView, selectedRecipeId: $selectedRecipeId)
+                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                } else if currentView == "recipeDetail" {
+                    if let recipeId = selectedRecipeId {
+                        RecipeDetailView(recipeId: recipeId, currentView: $currentView, previousView: "allRecipes")
+                            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    } else {
+                        HomeView(currentView: $currentView, selectedRecipeId: $selectedRecipeId)
+                            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    }
+                } else if currentView == "recipeDetailFromHome" {
+                    if let recipeId = selectedRecipeId {
+                        RecipeDetailView(recipeId: recipeId, currentView: $currentView, previousView: "home")
+                            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    } else {
+                        HomeView(currentView: $currentView, selectedRecipeId: $selectedRecipeId)
+                            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    }
                 }
             }
             .preferredColorScheme(settings.theme.colorScheme)
