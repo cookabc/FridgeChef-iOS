@@ -14,7 +14,7 @@ struct AppColors {
     static var cardBackground: Color {
         Color(UIColor { traitCollection in
             traitCollection.userInterfaceStyle == .dark
-                ? UIColor(red: 0.15, green: 0.15, blue: 0.25, alpha: 1.0)
+                ? UIColor(red: 0.25, green: 0.25, blue: 0.35, alpha: 1.0)
                 : UIColor.white
         })
     }
