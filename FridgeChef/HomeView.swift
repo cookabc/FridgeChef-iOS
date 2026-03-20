@@ -23,27 +23,9 @@ struct HomeView: View {
                         .fontWeight(.black)
                         .foregroundColor(AppColors.accent)
                     Spacer()
-                    Button(action: { 
-                        withAnimation(.spring()) {
-                            currentView = "settings"
-                        }
-                    }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 9999)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 9999)
-                                .fill(AppColors.cardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9999)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            Image(systemName: "gearshape")
-                                .font(.system(size: 20))
-                                .foregroundColor(AppColors.primaryText)
-                        }
-                        .frame(width: 48, height: 48)
-                    }
+                    NeoPopBackButton(action: {
+                        currentView = "settings"
+                    }, icon: "gearshape")
                 }
                 .padding()
                 .padding(.top, 8)
@@ -105,16 +87,7 @@ struct HomeView: View {
                 .padding(.bottom, 24)
                 
                 // 统计数据
-                ZStack {
-                    RoundedRectangle(cornerRadius: 24)
-                        .fill(AppColors.shadow)
-                        .offset(x: 6, y: 6)
-                    RoundedRectangle(cornerRadius: 24)
-                        .fill(AppColors.cardBackground)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 24)
-                                .stroke(AppColors.primaryText, lineWidth: 4)
-                        )
+                NeoPopCard {
                     VStack {
                         Text("home.generated.recipes".localized)
                             .font(.caption)
@@ -172,17 +145,7 @@ struct HomeView: View {
                         .padding(.bottom, 24)
                     }
                 } else {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.shadow)
-                            .offset(x: 6, y: 6)
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.cardBackground)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .stroke(AppColors.primaryText, lineWidth: 4)
-                            )
-                        
+                    NeoPopCard {
                         VStack {
                             Image(systemName: "clipboard")
                                 .font(.system(size: 60))
@@ -206,24 +169,6 @@ struct HomeView: View {
                 Spacer()
             }
         }
-    }
-    
-    private func getIconColor(for recipe: RecipeEntity) -> Color {
-        let colors: [Color] = [
-            .init(red: 0.9, green: 0.4, blue: 0.6),
-            .init(red: 0.4, green: 0.7, blue: 0.5),
-            .init(red: 0.9, green: 0.6, blue: 0.3),
-            .init(red: 0.5, green: 0.6, blue: 0.9),
-            .init(red: 0.7, green: 0.4, blue: 0.8)
-        ]
-        let index = Int(recipe.id?.hashValue ?? 0) % colors.count
-        return colors[abs(index)]
-    }
-    
-    private func getFoodEmoji(for recipe: RecipeEntity) -> String {
-        let emojis = ["🍅", "🥘", "🍜", "🍳", "🥗", "🍝", "🍲", "🍛"]
-        let index = Int(recipe.id?.hashValue ?? 0) % emojis.count
-        return emojis[abs(index)]
     }
 }
 
@@ -259,7 +204,7 @@ struct RecipeCard: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(recipe.name ?? "Unknown")
+                        Text(recipe.name ?? "common.unknown".localized)
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(AppColors.primaryText)
@@ -279,21 +224,21 @@ struct RecipeCard: View {
                                     .cornerRadius(9999)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(AppColors.primaryText, lineWidth: 2)
+                                            .stroke(Color.black, lineWidth: 2)
                                     )
                             }
                             if let cookTime = recipe.cookTime {
                                 Text(cookTime)
                                     .font(.caption)
                                     .fontWeight(.bold)
-                                    .foregroundColor(AppColors.primaryText)
+                                    .foregroundColor(.black)
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 4)
-                                    .background(AppColors.cardBackground)
+                                    .background(Color.white)
                                     .cornerRadius(9999)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(AppColors.primaryText, lineWidth: 2)
+                                            .stroke(Color.black, lineWidth: 2)
                                     )
                             }
                         }

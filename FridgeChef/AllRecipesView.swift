@@ -18,36 +18,9 @@ struct AllRecipesView: View {
             
             VStack(spacing: 0) {
                 // 顶部返回按钮和标题
-                HStack {
-                    Button(action: {
-                        withAnimation(.spring()) {
-                            currentView = "home"
-                        }
-                    }) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 9999)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 9999)
-                                .fill(AppColors.cardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9999)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 20))
-                                .foregroundColor(AppColors.primaryText)
-                        }
-                        .frame(width: 48, height: 48)
-                    }
-                    Text("home.history".localized)
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .foregroundColor(AppColors.accent)
-                    Spacer()
+                NeoPopPageHeader(title: "home.history".localized) {
+                    currentView = "home"
                 }
-                .padding()
-                .padding(.top, 8)
                 
                 // 食谱列表
                 if !recipes.isEmpty {
@@ -68,20 +41,23 @@ struct AllRecipesView: View {
                 } else {
                     Spacer()
                     
-                    VStack {
-                        Image(systemName: "clipboard")
-                            .font(.system(size: 80))
-                            .foregroundColor(AppColors.secondaryText)
-                            .padding(.bottom, 20)
-                        Text("home.no.recipes".localized)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(AppColors.primaryText)
-                        Text("home.no.recipes.prompt".localized)
-                            .font(.body)
-                            .foregroundColor(AppColors.secondaryText)
-                            .padding(.top, 8)
+                    NeoPopCard {
+                        VStack {
+                            Image(systemName: "clipboard")
+                                .font(.system(size: 80))
+                                .foregroundColor(AppColors.secondaryText)
+                                .padding(.bottom, 20)
+                            Text("home.no.recipes".localized)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(AppColors.primaryText)
+                            Text("home.no.recipes.prompt".localized)
+                                .font(.body)
+                                .foregroundColor(AppColors.secondaryText)
+                                .padding(.top, 8)
+                        }
                     }
+                    .padding(.horizontal, 16)
                     
                     Spacer()
                 }
@@ -122,7 +98,7 @@ struct RecipeListCard: View {
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(recipe.name ?? "Unknown")
+                        Text(recipe.name ?? "common.unknown".localized)
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(AppColors.primaryText)
@@ -142,21 +118,21 @@ struct RecipeListCard: View {
                                     .cornerRadius(9999)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(AppColors.primaryText, lineWidth: 2)
+                                            .stroke(Color.black, lineWidth: 2)
                                     )
                             }
                             if let cookTime = recipe.cookTime {
                                 Text(cookTime)
                                     .font(.caption)
                                     .fontWeight(.bold)
-                                    .foregroundColor(AppColors.primaryText)
+                                    .foregroundColor(.black)
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 4)
-                                    .background(AppColors.cardBackground)
+                                    .background(Color.white)
                                     .cornerRadius(9999)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(AppColors.primaryText, lineWidth: 2)
+                                            .stroke(Color.black, lineWidth: 2)
                                     )
                             }
                         }
