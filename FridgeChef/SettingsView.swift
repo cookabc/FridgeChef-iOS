@@ -16,192 +16,66 @@ struct SettingsView: View {
             
             VStack(spacing: 0) {
                 // 顶部返回按钮和标题
-                HStack {
-                    Button(action: { currentView = "home" })
-                    {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 9999)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 9999)
-                                .fill(AppColors.cardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9999)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 20))
-                                .foregroundColor(AppColors.primaryText)
-                        }
-                        .frame(width: 48, height: 48)
-                    }
-                    Text("settings.title".localized)
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .foregroundColor(AppColors.accent)
-                    Spacer()
+                NeoPopPageHeader(title: "settings.title".localized) {
+                    currentView = "home"
                 }
-                .padding()
-                .padding(.top, 8)
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 16) {
                         // 语言设置卡片
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.cardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            
-                            VStack(alignment: .leading, spacing: 16) {
-                                Text("settings.language".localized)
-                                    .font(.headline)
-                                    .fontWeight(.black)
-                                    .foregroundColor(AppColors.primaryText)
-                                
-                                Picker("settings.language".localized, selection: $settings.language) {
-                                    ForEach(AppLanguage.allCases) { language in
-                                        Text(language.displayName)
-                                            .tag(language)
-                                    }
-                                }
-                                .pickerStyle(.segmented)
-                            }
-                            .padding()
+                        NeoPopCard {
+                            NeoPopSegmentedControl(
+                                title: "settings.language".localized,
+                                selection: $settings.language,
+                                options: AppLanguage.allCases,
+                                displayName: { $0.displayName }
+                            )
                         }
                         .padding(.horizontal, 16)
                         
                         // 主题设置卡片
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.cardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            
-                            VStack(alignment: .leading, spacing: 16) {
-                                Text("settings.theme".localized)
-                                    .font(.headline)
-                                    .fontWeight(.black)
-                                    .foregroundColor(AppColors.primaryText)
-                                
-                                Picker("settings.theme".localized, selection: $settings.theme) {
-                                    ForEach(AppTheme.allCases) { theme in
-                                        Text(theme.displayName)
-                                            .tag(theme)
-                                    }
-                                }
-                                .pickerStyle(.segmented)
-                            }
-                            .padding()
+                        NeoPopCard {
+                            NeoPopSegmentedControl(
+                                title: "settings.theme".localized,
+                                selection: $settings.theme,
+                                options: AppTheme.allCases,
+                                displayName: { $0.displayName }
+                            )
                         }
                         .padding(.horizontal, 16)
                         
                         // API 配置卡片
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.cardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            
-                            VStack(alignment: .leading, spacing: 24) {
+                        NeoPopCard {
+                            VStack(alignment: .leading, spacing: 20) {
                                 Text("API")
                                     .font(.headline)
                                     .fontWeight(.black)
                                     .foregroundColor(AppColors.primaryText)
                                 
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text("settings.base.url".localized)
-                                        .font(.subheadline)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(AppColors.primaryText)
-                                    
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .fill(AppColors.shadow)
-                                            .offset(x: 6, y: 6)
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .fill(AppColors.cardBackground)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(AppColors.primaryText, lineWidth: 3)
-                                            )
-                                        TextField("settings.placeholder.url".localized, text: $baseURL)
-                                            .padding()
-                                            .foregroundColor(AppColors.primaryText)
-                                    }
-                                    .frame(height: 48)
-                                    .contentShape(Rectangle())
-                                }
+                                NeoPopInputField(
+                                    title: "settings.base.url".localized,
+                                    placeholder: "settings.placeholder.url".localized,
+                                    text: $baseURL
+                                )
                                 
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text("settings.model".localized)
-                                        .font(.subheadline)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(AppColors.primaryText)
-                                    
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .fill(AppColors.shadow)
-                                            .offset(x: 6, y: 6)
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .fill(AppColors.cardBackground)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(AppColors.primaryText, lineWidth: 3)
-                                            )
-                                        TextField("settings.placeholder.model".localized, text: $model)
-                                            .padding()
-                                            .foregroundColor(AppColors.primaryText)
-                                    }
-                                    .frame(height: 48)
-                                    .contentShape(Rectangle())
-                                }
+                                NeoPopInputField(
+                                    title: "settings.model".localized,
+                                    placeholder: "settings.placeholder.model".localized,
+                                    text: $model
+                                )
                                 
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text("settings.api.key".localized)
-                                        .font(.subheadline)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(AppColors.primaryText)
-                                    
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .fill(AppColors.shadow)
-                                            .offset(x: 6, y: 6)
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .fill(AppColors.cardBackground)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(AppColors.primaryText, lineWidth: 3)
-                                            )
-                                        SecureField("settings.placeholder.key".localized, text: $apiKey)
-                                            .padding()
-                                            .foregroundColor(AppColors.primaryText)
-                                    }
-                                    .frame(height: 48)
-                                    .contentShape(Rectangle())
-                                }
+                                NeoPopInputField(
+                                    title: "settings.api.key".localized,
+                                    placeholder: "settings.placeholder.key".localized,
+                                    text: $apiKey,
+                                    isSecure: true
+                                )
                             }
-                            .padding()
                         }
                         .padding(.horizontal, 16)
                         
                         // 保存按钮
-                        Button(action: {
+                        NeoPopButton(title: "settings.save".localized) {
                             UserDefaults.standard.set(baseURL, forKey: "API_BASE_URL")
                             UserDefaults.standard.set(model, forKey: "API_MODEL")
                             UserDefaults.standard.set(apiKey, forKey: "API_KEY")
@@ -210,23 +84,6 @@ struct SettingsView: View {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 showSuccessMessage = false
                             }
-                        }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.shadow)
-                                    .offset(x: 6, y: 6)
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.accent)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(AppColors.primaryText, lineWidth: 4)
-                                    )
-                                Text("settings.save".localized)
-                                    .font(.title)
-                                    .fontWeight(.black)
-                                    .foregroundColor(.black)
-                            }
-                            .frame(height: 64)
                         }
                         .padding(.horizontal, 16)
                         
@@ -239,7 +96,7 @@ struct SettingsView: View {
                                 Text("settings.save.success".localized)
                                     .font(.headline)
                                     .fontWeight(.bold)
-                                    .foregroundColor(AppColors.primaryText)
+                                    .foregroundColor(.white)
                             }
                             .padding(.top, 8)
                         }

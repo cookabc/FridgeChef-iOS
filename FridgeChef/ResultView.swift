@@ -15,46 +15,15 @@ struct ResultView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 0) {
                     // 顶部返回按钮和标题
-                    HStack {
-                        Button(action: { currentView = "home" })
-                        {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.shadow)
-                                    .offset(x: 6, y: 6)
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.cardBackground)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(AppColors.primaryText, lineWidth: 4)
-                                    )
-                                Image(systemName: "house")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(AppColors.primaryText)
-                            }
-                            .frame(width: 48, height: 48)
-                        }
-                        Text("result.title".localized)
-                            .font(.largeTitle)
-                            .fontWeight(.black)
-                            .foregroundColor(AppColors.accent)
-                        Spacer()
+                    NeoPopPageHeader(
+                        title: "result.title".localized,
+                        backIcon: "house"
+                    ) {
+                        currentView = "home"
                     }
-                    .padding()
-                    .padding(.top, 8)
                     
                     // 食谱标题卡片
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.shadow)
-                            .offset(x: 6, y: 6)
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.accent)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .stroke(AppColors.primaryText, lineWidth: 4)
-                            )
-                        
+                    NeoPopCard(backgroundColor: AppColors.accent) {
                         VStack(alignment: .leading, spacing: 16) {
                             HStack(spacing: 16) {
                                 ZStack {
@@ -75,45 +44,38 @@ struct ResultView: View {
                                         Text("result.difficulty.easy".localized)
                                             .font(.caption)
                                             .fontWeight(.bold)
-                                            .foregroundColor(AppColors.accent)
-                                            .padding(.horizontal, 12)
-                                            .padding(.vertical, 4)
-                                            .background(Color.black)
-                                            .cornerRadius(9999)
-                                        
-                                        Text("result.time.minutes".localized(with: 15))
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(AppColors.primaryText)
+                                            .foregroundColor(.black)
                                             .padding(.horizontal, 12)
                                             .padding(.vertical, 4)
                                             .background(Color.white)
                                             .cornerRadius(9999)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(AppColors.primaryText, lineWidth: 2)
+                                                    .stroke(Color.black, lineWidth: 2)
+                                            )
+                                        
+                                        Text("result.time.minutes".localized(with: 15))
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.black)
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 4)
+                                            .background(Color.white)
+                                            .cornerRadius(9999)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 9999)
+                                                    .stroke(Color.black, lineWidth: 2)
                                             )
                                     }
                                 }
                             }
                         }
-                        .padding()
                     }
                     .padding(.horizontal, 16)
                     .padding(.bottom, 16)
                     
                     // 食材列表卡片
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.shadow)
-                            .offset(x: 6, y: 6)
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.cardBackground)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .stroke(AppColors.primaryText, lineWidth: 4)
-                            )
-                        
+                    NeoPopCard {
                         VStack(alignment: .leading, spacing: 16) {
                             Text("result.ingredients".localized)
                                 .font(.title)
@@ -151,23 +113,12 @@ struct ResultView: View {
                                 }
                             }
                         }
-                        .padding()
                     }
                     .padding(.horizontal, 16)
                     .padding(.bottom, 16)
                     
                     // 制作步骤卡片
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.shadow)
-                            .offset(x: 6, y: 6)
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(AppColors.cardBackground)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .stroke(AppColors.primaryText, lineWidth: 4)
-                            )
-                        
+                    NeoPopCard {
                         VStack(alignment: .leading, spacing: 16) {
                             Text("result.steps".localized)
                                 .font(.title)
@@ -196,7 +147,6 @@ struct ResultView: View {
                                 }
                             }
                         }
-                        .padding()
                     }
                     .padding(.horizontal, 16)
                     .padding(.bottom, 16)
@@ -204,48 +154,19 @@ struct ResultView: View {
                     // 操作按钮
                     HStack(spacing: 16) {
                         // 重新生成按钮
-                        Button(action: {
+                        NeoPopButton(
+                            title: "result.regenerate".localized,
+                            style: .secondary
+                        ) {
                             // 重新生成
-                        }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.shadow)
-                                    .offset(x: 6, y: 6)
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.cardBackground)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(AppColors.primaryText, lineWidth: 4)
-                                    )
-                                Text("result.regenerate".localized)
-                                    .font(.title3)
-                                    .fontWeight(.black)
-                                    .foregroundColor(AppColors.primaryText)
-                            }
-                            .frame(height: 56)
                         }
                         .frame(maxWidth: .infinity)
                         
                         // 保存按钮
-                        Button(action: {
+                        NeoPopButton(
+                            title: isSaved ? "result.saved".localized : "result.save".localized
+                        ) {
                             saveRecipe()
-                        }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.shadow)
-                                    .offset(x: 6, y: 6)
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.accent)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(AppColors.primaryText, lineWidth: 4)
-                                    )
-                                Text(isSaved ? "result.saved".localized : "result.save".localized)
-                                    .font(.title3)
-                                    .fontWeight(.black)
-                                    .foregroundColor(AppColors.primaryText)
-                            }
-                            .frame(height: 56)
                         }
                         .frame(maxWidth: .infinity)
                         .disabled(isSaved)

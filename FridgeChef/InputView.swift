@@ -18,107 +18,47 @@ struct InputView: View {
             
             VStack(spacing: 0) {
                 // 顶部返回按钮和标题
-                HStack {
-                    Button(action: { currentView = "home" })
-                    {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 9999)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 9999)
-                                .fill(AppColors.cardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 9999)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 20))
-                                .foregroundColor(AppColors.primaryText)
-                        }
-                        .frame(width: 48, height: 48)
-                    }
-                    Text("input.title".localized)
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .foregroundColor(AppColors.accent)
-                    Spacer()
+                NeoPopPageHeader(title: "input.title".localized) {
+                    currentView = "home"
                 }
-                .padding()
-                .padding(.top, 8)
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 16) {
                         // 食材输入框卡片
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.cardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            
-                            VStack(alignment: .leading) {
+                        NeoPopCard {
+                            VStack(alignment: .leading, spacing: 12) {
                                 Text("input.fridge.question".localized)
                                     .font(.headline)
                                     .fontWeight(.bold)
-                                    .padding(.bottom, 8)
                                     .foregroundColor(AppColors.primaryText)
                                 
-                                // 输入框
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 9999)
-                                        .fill(AppColors.shadow)
-                                        .offset(x: 4, y: 4)
-                                    RoundedRectangle(cornerRadius: 9999)
-                                        .fill(AppColors.cardBackground)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 9999)
-                                                .stroke(AppColors.primaryText, lineWidth: 3)
-                                        )
-                                    TextField("input.placeholder".localized, text: $customIngredients)
-                                        .padding()
-                                }
-                                .frame(height: 48)
-                                .contentShape(Rectangle())
-                                .padding(.bottom, 8)
+                                NeoPopInputField(
+                                    title: "",
+                                    placeholder: "input.placeholder".localized,
+                                    text: $customIngredients
+                                )
                                 
                                 Text("input.example".localized)
                                     .font(.caption)
                                     .fontWeight(.semibold)
                                     .foregroundColor(AppColors.secondaryText)
                             }
-                            .padding()
                         }
                         .padding(.horizontal, 16)
                         
                         // 常用食材标签卡片
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.cardBackground)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            
-                            VStack(alignment: .leading) {
+                        NeoPopCard {
+                            VStack(alignment: .leading, spacing: 12) {
                                 Text("input.quick.select".localized)
                                     .font(.headline)
                                     .fontWeight(.black)
-                                    .padding(.bottom, 12)
                                     .foregroundColor(AppColors.primaryText)
                                 
                                 let emojis = ["🥚", "🍅", "🧅", "🫑", "🥩", "🍗", "🍚", "🍜"]
                                 let ingredientsWithEmojis = Array(zip(ingredientKeys, emojis))
                                 
                                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                                    ForEach(ingredientsWithEmojis, id: \.0) {
-                                        ingredientKey, emoji in
+                                    ForEach(ingredientsWithEmojis, id: \.0) { ingredientKey, emoji in
                                         Button(action: {
                                             if selectedIngredients.contains(ingredientKey) {
                                                 selectedIngredients.remove(ingredientKey)
@@ -131,7 +71,7 @@ struct InputView: View {
                                                     .fill(AppColors.shadow)
                                                     .offset(x: 2, y: 2)
                                                 RoundedRectangle(cornerRadius: 9999)
-                                                    .fill(selectedIngredients.contains(ingredientKey) ? AppColors.accent : Color.white)
+                                                    .fill(selectedIngredients.contains(ingredientKey) ? AppColors.accent : AppColors.cardBackground)
                                                     .overlay(
                                                         RoundedRectangle(cornerRadius: 9999)
                                                             .stroke(AppColors.primaryText, lineWidth: 2)
@@ -147,7 +87,6 @@ struct InputView: View {
                                     }
                                 }
                             }
-                            .padding()
                         }
                         .padding(.horizontal, 16)
                         
@@ -155,23 +94,13 @@ struct InputView: View {
                         if !selectedIngredients.isEmpty {
                             let emojis = ["🥚", "🍅", "🧅", "🫑", "🥩", "🍗", "🍚", "🍜"]
                             
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(AppColors.shadow)
-                                    .offset(x: 6, y: 6)
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(AppColors.accent)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 24)
-                                            .stroke(AppColors.primaryText, lineWidth: 4)
-                                    )
-                                
-                                VStack(alignment: .leading) {
+                            NeoPopCard(backgroundColor: AppColors.accent) {
+                                VStack(alignment: .leading, spacing: 12) {
                                     Text("input.selected".localized)
                                         .font(.headline)
                                         .fontWeight(.bold)
-                                        .padding(.bottom, 8)
                                         .foregroundColor(AppColors.primaryText)
+                                    
                                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 8) {
                                         ForEach(Array(selectedIngredients), id: \.self) { ingredientKey in
                                             if let index = ingredientKeys.firstIndex(of: ingredientKey), index < emojis.count {
@@ -181,13 +110,12 @@ struct InputView: View {
                                                     .foregroundColor(AppColors.accent)
                                                     .padding(.horizontal, 12)
                                                     .padding(.vertical, 6)
-                                                    .background(Color.black)
+                                                    .background(AppColors.primaryText)
                                                     .cornerRadius(9999)
                                             }
                                         }
                                     }
                                 }
-                                .padding()
                             }
                             .padding(.horizontal, 16)
                         }
@@ -201,33 +129,13 @@ struct InputView: View {
                         }
                         
                         // 生成食谱按钮
-                        Button(action: { 
+                        NeoPopButton(
+                            title: "input.generate".localized,
+                            isLoading: isLoading
+                        ) {
                             generateRecipe()
-                        }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.shadow)
-                                    .offset(x: 6, y: 6)
-                                RoundedRectangle(cornerRadius: 9999)
-                                    .fill(AppColors.accent)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 9999)
-                                            .stroke(AppColors.primaryText, lineWidth: 4)
-                                    )
-                                if isLoading {
-                                    ProgressView()
-                                        .tint(.black)
-                                } else {
-                                    Text("input.generate".localized)
-                                        .font(.title)
-                                        .fontWeight(.black)
-                                        .foregroundColor(AppColors.primaryText)
-                                }
-                            }
-                            .frame(height: 64)
                         }
                         .padding(.horizontal, 16)
-                        .disabled(isLoading)
                     }
                     .padding(.top, 16)
                 }
