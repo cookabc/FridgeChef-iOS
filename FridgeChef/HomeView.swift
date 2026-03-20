@@ -130,14 +130,14 @@ struct HomeView: View {
                         .foregroundColor(AppColors.accent)
                     Spacer()
                     Button(action: {
-                        // 查看全部功能待实现
-                    })
-                    {
+                        print("View all tapped")
+                    }) {
                         Text("home.view.all".localized)
                             .font(.subheadline)
                             .fontWeight(.bold)
                             .foregroundColor(AppColors.accent)
                     }
+                    .buttonStyle(PlainButtonStyle())
                 }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 12)
@@ -148,7 +148,7 @@ struct HomeView: View {
                         VStack(spacing: 16) {
                             ForEach(recipes) { recipe in
                                 Button(action: {
-                                    // 查看食谱详情功能待实现
+                                    print("Recipe tapped: \(recipe.name ?? "unknown")")
                                 }) {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 24)
@@ -224,6 +224,8 @@ struct HomeView: View {
                                     }
                                     .frame(height: 120)
                                 }
+                                .buttonStyle(PlainButtonStyle())
+                                .contentShape(Rectangle())
                                 .padding(.horizontal, 16)
                             }
                         }
