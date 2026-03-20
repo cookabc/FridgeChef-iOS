@@ -14,7 +14,7 @@ struct RecipeDetailView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // 顶部导航栏
+                // 顶部返回按钮和标题
                 HStack {
                     Button(action: {
                         withAnimation(.spring()) {
@@ -22,35 +22,28 @@ struct RecipeDetailView: View {
                             currentView = previousView
                         }
                     }) {
-                        HStack(spacing: 4) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 9999)
+                                .fill(AppColors.shadow)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 9999)
+                                .fill(AppColors.cardBackground)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 9999)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
+                                )
                             Image(systemName: "chevron.left")
-                                .font(.system(size: 20, weight: .bold))
-                            Text("common.back".localized)
-                                .font(.headline)
-                                .fontWeight(.bold)
+                                .font(.system(size: 20))
+                                .foregroundColor(AppColors.primaryText)
                         }
-                        .foregroundColor(AppColors.accent)
+                        .frame(width: 48, height: 48)
                     }
-                    
-                    Spacer()
-                    
                     Text(recipe?.name ?? "Recipe")
-                        .font(.headline)
+                        .font(.largeTitle)
                         .fontWeight(.black)
-                        .foregroundColor(.white)
+                        .foregroundColor(AppColors.accent)
                         .lineLimit(1)
-                    
                     Spacer()
-                    
-                    // 占位，保持居中
-                    HStack(spacing: 4) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 20, weight: .bold))
-                            .opacity(0)
-                        Text("common.back".localized)
-                            .font(.headline)
-                            .opacity(0)
-                    }
                 }
                 .padding()
                 .padding(.top, 8)
@@ -115,8 +108,6 @@ struct RecipeDetailView: View {
                                 VStack(alignment: .leading, spacing: 16) {
                                     // Section Title
                                     HStack {
-                                        Text("👨‍🍳")
-                                            .font(.title2)
                                         Text("result.steps".localized)
                                             .font(.title2)
                                             .fontWeight(.black)

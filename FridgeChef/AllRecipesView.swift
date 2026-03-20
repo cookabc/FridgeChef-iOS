@@ -17,41 +17,34 @@ struct AllRecipesView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // 顶部导航栏
+                // 顶部返回按钮和标题
                 HStack {
                     Button(action: {
                         withAnimation(.spring()) {
                             currentView = "home"
                         }
                     }) {
-                        HStack(spacing: 4) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 9999)
+                                .fill(AppColors.shadow)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 9999)
+                                .fill(AppColors.cardBackground)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 9999)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
+                                )
                             Image(systemName: "chevron.left")
-                                .font(.system(size: 20, weight: .bold))
-                            Text("common.back".localized)
-                                .font(.headline)
-                                .fontWeight(.bold)
+                                .font(.system(size: 20))
+                                .foregroundColor(AppColors.primaryText)
                         }
-                        .foregroundColor(AppColors.accent)
+                        .frame(width: 48, height: 48)
                     }
-                    
-                    Spacer()
-                    
                     Text("home.history".localized)
-                        .font(.title2)
+                        .font(.largeTitle)
                         .fontWeight(.black)
-                        .foregroundColor(.white)
-                    
+                        .foregroundColor(AppColors.accent)
                     Spacer()
-                    
-                    // 占位，保持居中
-                    HStack(spacing: 4) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 20, weight: .bold))
-                            .opacity(0)
-                        Text("common.back".localized)
-                            .font(.headline)
-                            .opacity(0)
-                    }
                 }
                 .padding()
                 .padding(.top, 8)
