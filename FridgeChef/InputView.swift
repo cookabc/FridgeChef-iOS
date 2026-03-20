@@ -82,6 +82,7 @@ struct InputView: View {
                                         .padding()
                                 }
                                 .frame(height: 48)
+                                .contentShape(Rectangle())
                                 .padding(.bottom, 8)
                                 
                                 Text("input.example".localized)

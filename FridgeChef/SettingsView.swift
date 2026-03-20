@@ -145,6 +145,7 @@ struct SettingsView: View {
                                             .foregroundColor(AppColors.primaryText)
                                     }
                                     .frame(height: 48)
+                                    .contentShape(Rectangle())
                                 }
                                 
                                 VStack(alignment: .leading, spacing: 8) {
@@ -168,6 +169,7 @@ struct SettingsView: View {
                                             .foregroundColor(AppColors.primaryText)
                                     }
                                     .frame(height: 48)
+                                    .contentShape(Rectangle())
                                 }
                                 
                                 VStack(alignment: .leading, spacing: 8) {
@@ -191,6 +193,7 @@ struct SettingsView: View {
                                             .foregroundColor(AppColors.primaryText)
                                     }
                                     .frame(height: 48)
+                                    .contentShape(Rectangle())
                                 }
                             }
                             .padding()
