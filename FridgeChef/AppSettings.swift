@@ -14,9 +14,9 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         case .system:
             return "settings.language.system".localized
         case .chinese:
-            return "简体中文"
+            return "settings.language.chinese".localized
         case .english:
-            return "English"
+            return "settings.language.english".localized
         }
     }
     

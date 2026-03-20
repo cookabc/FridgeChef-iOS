@@ -39,9 +39,9 @@ class APIService {
 
         let ingredientsString = ingredients.joined(separator: "、")
 
-        let systemPrompt = "你是一个专业的厨师，根据用户提供的食材，生成一个详细的食谱。请严格按照以下 JSON 格式返回，不要包含任何其他文字：\n{\"dishName\": \"菜名\", \"ingredients\": [\"食材1\", \"食材2\", ...], \"steps\": [\"步骤1\", \"步骤2\", ...]}"
+        let systemPrompt = "api.system.prompt".localized
 
-        let userPrompt = "请使用以下食材生成一个食谱：\(ingredientsString)"
+        let userPrompt = "api.user.prompt".localized(with: ingredientsString)
 
         let requestBody: [String: Any] = [
             "model": model,
