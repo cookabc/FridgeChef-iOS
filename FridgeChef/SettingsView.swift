@@ -188,7 +188,7 @@ struct SettingsView: View {
                                                 RoundedRectangle(cornerRadius: 9999)
                                                     .stroke(AppColors.primaryText, lineWidth: 3)
                                             )
-                                        TextField("settings.placeholder.key".localized, text: $apiKey)
+                                        SecureField("settings.placeholder.key".localized, text: $apiKey)
                                             .padding()
                                             .foregroundColor(AppColors.primaryText)
                                     }
