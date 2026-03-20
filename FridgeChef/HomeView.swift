@@ -3,6 +3,9 @@ import CoreData
 
 struct HomeView: View {
     @Binding var currentView: String
+    @State private var selectedRecipe: RecipeEntity? = nil
+    @State private var showRecipeDetail = false
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \RecipeEntity.timestamp, ascending: false)],
         animation: .default
@@ -21,8 +24,11 @@ struct HomeView: View {
                         .fontWeight(.black)
                         .foregroundColor(AppColors.accent)
                     Spacer()
-                    Button(action: { currentView = "settings" })
-                    {
+                    Button(action: { 
+                        withAnimation(.spring()) {
+                            currentView = "settings"
+                        }
+                    }) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 9999)
                                 .fill(AppColors.shadow)
@@ -44,8 +50,11 @@ struct HomeView: View {
                 .padding(.top, 8)
                 
                 // 开始烹饪卡片
-                Button(action: { currentView = "input" })
-                {
+                Button(action: { 
+                    withAnimation(.spring()) {
+                        currentView = "input"
+                    }
+                }) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 24)
                             .fill(AppColors.shadow)
@@ -130,14 +139,17 @@ struct HomeView: View {
                         .foregroundColor(AppColors.accent)
                     Spacer()
                     Button(action: {
-                        print("View all tapped")
+                        withAnimation(.spring()) {
+                            // 查看全部功能待实现
+                        }
                     }) {
                         Text("home.view.all".localized)
                             .font(.subheadline)
                             .fontWeight(.bold)
                             .foregroundColor(AppColors.accent)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
                     }
-                    .buttonStyle(PlainButtonStyle())
                 }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 12)
@@ -145,87 +157,12 @@ struct HomeView: View {
                 // 历史食谱卡片
                 if !recipes.isEmpty {
                     ScrollView(.vertical, showsIndicators: false) {
-                        VStack(spacing: 16) {
+                        LazyVStack(spacing: 16) {
                             ForEach(recipes) { recipe in
-                                Button(action: {
-                                    print("Recipe tapped: \(recipe.name ?? "unknown")")
-                                }) {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 24)
-                                            .fill(AppColors.shadow)
-                                            .offset(x: 6, y: 6)
-                                        RoundedRectangle(cornerRadius: 24)
-                                            .fill(AppColors.cardBackground)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 24)
-                                                    .stroke(AppColors.primaryText, lineWidth: 4)
-                                            )
-                                        
-                                        HStack(spacing: 16) {
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .fill(getIconColor(for: recipe))
-                                                    .frame(width: 80, height: 80)
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 16)
-                                                            .stroke(AppColors.primaryText, lineWidth: 3)
-                                                    )
-                                                Text(getFoodEmoji(for: recipe))
-                                                    .font(.system(size: 32))
-                                            }
-                                            
-                                            VStack(alignment: .leading, spacing: 8) {
-                                                Text(recipe.name ?? "未知菜名")
-                                                    .font(.headline)
-                                                    .fontWeight(.bold)
-                                                    .foregroundColor(AppColors.primaryText)
-                                                Text(recipe.desc ?? "")
-                                                    .font(.subheadline)
-                                                    .foregroundColor(AppColors.secondaryText)
-                                                    .lineLimit(1)
-                                                HStack(spacing: 8) {
-                                                    if let difficulty = recipe.difficulty {
-                                                        Text(difficulty)
-                                                            .font(.caption)
-                                                            .fontWeight(.bold)
-                                                            .foregroundColor(.black)
-                                                            .padding(.horizontal, 12)
-                                                            .padding(.vertical, 4)
-                                                            .background(AppColors.accent)
-                                                            .cornerRadius(9999)
-                                                            .overlay(
-                                                                RoundedRectangle(cornerRadius: 9999)
-                                                                    .stroke(AppColors.primaryText, lineWidth: 2)
-                                                            )
-                                                    }
-                                                    if let cookTime = recipe.cookTime {
-                                                        Text(cookTime)
-                                                            .font(.caption)
-                                                            .fontWeight(.bold)
-                                                            .foregroundColor(AppColors.primaryText)
-                                                            .padding(.horizontal, 12)
-                                                            .padding(.vertical, 4)
-                                                            .background(AppColors.cardBackground)
-                                                            .cornerRadius(9999)
-                                                            .overlay(
-                                                                RoundedRectangle(cornerRadius: 9999)
-                                                                    .stroke(AppColors.primaryText, lineWidth: 2)
-                                                            )
-                                                    }
-                                                }
-                                            }
-                                            .frame(maxWidth: .infinity)
-                                            
-                                            Image(systemName: "chevron.right")
-                                                .font(.system(size: 20))
-                                                .foregroundColor(AppColors.primaryText)
-                                        }
-                                        .padding()
-                                    }
-                                    .frame(height: 120)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .contentShape(Rectangle())
+                                RecipeCard(recipe: recipe, onTap: {
+                                    selectedRecipe = recipe
+                                    showRecipeDetail = true
+                                })
                                 .padding(.horizontal, 16)
                             }
                         }
@@ -266,6 +203,11 @@ struct HomeView: View {
                 Spacer()
             }
         }
+        .sheet(isPresented: $showRecipeDetail) {
+            if let recipe = selectedRecipe {
+                RecipeDetailSheet(recipe: recipe, isPresented: $showRecipeDetail)
+            }
+        }
     }
     
     private func getIconColor(for recipe: RecipeEntity) -> Color {
@@ -284,6 +226,216 @@ struct HomeView: View {
         let emojis = ["🍅", "🥘", "🍜", "🍳", "🥗", "🍝", "🍲", "🍛"]
         let index = Int(recipe.id?.hashValue ?? 0) % emojis.count
         return emojis[abs(index)]
+    }
+}
+
+// MARK: - Recipe Card Component
+struct RecipeCard: View {
+    let recipe: RecipeEntity
+    let onTap: () -> Void
+    
+    var body: some View {
+        Button(action: onTap) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(AppColors.shadow)
+                    .offset(x: 6, y: 6)
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(AppColors.cardBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24)
+                            .stroke(AppColors.primaryText, lineWidth: 4)
+                    )
+                
+                HStack(spacing: 16) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(getIconColor(for: recipe))
+                            .frame(width: 80, height: 80)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(AppColors.primaryText, lineWidth: 3)
+                            )
+                        Text(getFoodEmoji(for: recipe))
+                            .font(.system(size: 32))
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(recipe.name ?? "Unknown")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(AppColors.primaryText)
+                        Text(recipe.desc ?? "")
+                            .font(.subheadline)
+                            .foregroundColor(AppColors.secondaryText)
+                            .lineLimit(1)
+                        HStack(spacing: 8) {
+                            if let difficulty = recipe.difficulty {
+                                Text(difficulty)
+                                    .font(.caption)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.black)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 4)
+                                    .background(AppColors.accent)
+                                    .cornerRadius(9999)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .stroke(AppColors.primaryText, lineWidth: 2)
+                                    )
+                            }
+                            if let cookTime = recipe.cookTime {
+                                Text(cookTime)
+                                    .font(.caption)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(AppColors.primaryText)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 4)
+                                    .background(AppColors.cardBackground)
+                                    .cornerRadius(9999)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 9999)
+                                            .stroke(AppColors.primaryText, lineWidth: 2)
+                                    )
+                            }
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 20))
+                        .foregroundColor(AppColors.primaryText)
+                }
+                .padding()
+            }
+            .frame(height: 120)
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+    
+    private func getIconColor(for recipe: RecipeEntity) -> Color {
+        let colors: [Color] = [
+            .init(red: 0.9, green: 0.4, blue: 0.6),
+            .init(red: 0.4, green: 0.7, blue: 0.5),
+            .init(red: 0.9, green: 0.6, blue: 0.3),
+            .init(red: 0.5, green: 0.6, blue: 0.9),
+            .init(red: 0.7, green: 0.4, blue: 0.8)
+        ]
+        let index = Int(recipe.id?.hashValue ?? 0) % colors.count
+        return colors[abs(index)]
+    }
+    
+    private func getFoodEmoji(for recipe: RecipeEntity) -> String {
+        let emojis = ["🍅", "🥘", "🍜", "🍳", "🥗", "🍝", "🍲", "🍛"]
+        let index = Int(recipe.id?.hashValue ?? 0) % emojis.count
+        return emojis[abs(index)]
+    }
+}
+
+// MARK: - Recipe Detail Sheet
+struct RecipeDetailSheet: View {
+    let recipe: RecipeEntity
+    @Binding var isPresented: Bool
+    
+    var body: some View {
+        NavigationView {
+            ZStack {
+                AppColors.background
+                    .ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(spacing: 20) {
+                        // Recipe Header
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(AppColors.shadow)
+                                .offset(x: 6, y: 6)
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(AppColors.accent)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .stroke(AppColors.primaryText, lineWidth: 4)
+                                )
+                            
+                            VStack(spacing: 16) {
+                                Text(recipe.name ?? "Unknown Recipe")
+                                    .font(.title)
+                                    .fontWeight(.black)
+                                    .foregroundColor(.black)
+                                
+                                HStack(spacing: 12) {
+                                    if let difficulty = recipe.difficulty {
+                                        Text(difficulty)
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(AppColors.accent)
+                                            .padding(.horizontal, 16)
+                                            .padding(.vertical, 6)
+                                            .background(Color.black)
+                                            .cornerRadius(9999)
+                                    }
+                                    if let cookTime = recipe.cookTime {
+                                        Text(cookTime)
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.black)
+                                            .padding(.horizontal, 16)
+                                            .padding(.vertical, 6)
+                                            .background(Color.white)
+                                            .cornerRadius(9999)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 9999)
+                                                    .stroke(Color.black, lineWidth: 2)
+                                            )
+                                    }
+                                }
+                            }
+                            .padding()
+                        }
+                        .padding(.horizontal, 16)
+                        
+                        // Description
+                        if let desc = recipe.desc, !desc.isEmpty {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(AppColors.shadow)
+                                    .offset(x: 6, y: 6)
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(AppColors.cardBackground)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 24)
+                                            .stroke(AppColors.primaryText, lineWidth: 4)
+                                    )
+                                
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text("Steps")
+                                        .font(.headline)
+                                        .fontWeight(.black)
+                                        .foregroundColor(AppColors.primaryText)
+                                    
+                                    Text(desc)
+                                        .font(.body)
+                                        .foregroundColor(AppColors.primaryText)
+                                        .lineSpacing(8)
+                                }
+                                .padding()
+                            }
+                            .padding(.horizontal, 16)
+                        }
+                    }
+                    .padding(.vertical, 20)
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        isPresented = false
+                    }
+                    .foregroundColor(AppColors.accent)
+                }
+            }
+        }
     }
 }
 
