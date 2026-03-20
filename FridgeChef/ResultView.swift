@@ -270,6 +270,10 @@ struct ResultView: View {
         do {
             try viewContext.save()
             isSaved = true
+            // 保存成功后返回首页
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                currentView = "home"
+            }
         } catch {
             let nsError = error as NSError
             print("Error saving recipe: \(nsError), \(nsError.userInfo)")
