@@ -3,8 +3,7 @@ import CoreData
 
 struct HomeView: View {
     @Binding var currentView: String
-    @State private var selectedRecipe: RecipeEntity? = nil
-    @State private var showRecipeDetail = false
+    @Binding var selectedRecipeId: UUID?
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \RecipeEntity.timestamp, ascending: false)],
@@ -140,7 +139,7 @@ struct HomeView: View {
                     Spacer()
                     Button(action: {
                         withAnimation(.spring()) {
-                            // 查看全部功能待实现
+                            currentView = "allRecipes"
                         }
                     }) {
                         Text("home.view.all".localized)
@@ -158,10 +157,14 @@ struct HomeView: View {
                 if !recipes.isEmpty {
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVStack(spacing: 16) {
-                            ForEach(recipes) { recipe in
+                            ForEach(recipes.prefix(5)) { recipe in
                                 RecipeCard(recipe: recipe, onTap: {
-                                    selectedRecipe = recipe
-                                    showRecipeDetail = true
+                                    if let id = recipe.id {
+                                        selectedRecipeId = id
+                                        withAnimation(.spring()) {
+                                            currentView = "recipeDetailFromHome"
+                                        }
+                                    }
                                 })
                                 .padding(.horizontal, 16)
                             }
@@ -201,11 +204,6 @@ struct HomeView: View {
                 }
                 
                 Spacer()
-            }
-        }
-        .sheet(isPresented: $showRecipeDetail) {
-            if let recipe = selectedRecipe {
-                RecipeDetailSheet(recipe: recipe, isPresented: $showRecipeDetail)
             }
         }
     }
@@ -332,115 +330,8 @@ struct RecipeCard: View {
     }
 }
 
-// MARK: - Recipe Detail Sheet
-struct RecipeDetailSheet: View {
-    let recipe: RecipeEntity
-    @Binding var isPresented: Bool
-    
-    var body: some View {
-        NavigationView {
-            ZStack {
-                AppColors.background
-                    .ignoresSafeArea()
-                
-                ScrollView {
-                    VStack(spacing: 20) {
-                        // Recipe Header
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.shadow)
-                                .offset(x: 6, y: 6)
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(AppColors.accent)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .stroke(AppColors.primaryText, lineWidth: 4)
-                                )
-                            
-                            VStack(spacing: 16) {
-                                Text(recipe.name ?? "Unknown Recipe")
-                                    .font(.title)
-                                    .fontWeight(.black)
-                                    .foregroundColor(.black)
-                                
-                                HStack(spacing: 12) {
-                                    if let difficulty = recipe.difficulty {
-                                        Text(difficulty)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(AppColors.accent)
-                                            .padding(.horizontal, 16)
-                                            .padding(.vertical, 6)
-                                            .background(Color.black)
-                                            .cornerRadius(9999)
-                                    }
-                                    if let cookTime = recipe.cookTime {
-                                        Text(cookTime)
-                                            .font(.caption)
-                                            .fontWeight(.bold)
-                                            .foregroundColor(.black)
-                                            .padding(.horizontal, 16)
-                                            .padding(.vertical, 6)
-                                            .background(Color.white)
-                                            .cornerRadius(9999)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 9999)
-                                                    .stroke(Color.black, lineWidth: 2)
-                                            )
-                                    }
-                                }
-                            }
-                            .padding()
-                        }
-                        .padding(.horizontal, 16)
-                        
-                        // Description
-                        if let desc = recipe.desc, !desc.isEmpty {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(AppColors.shadow)
-                                    .offset(x: 6, y: 6)
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(AppColors.cardBackground)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 24)
-                                            .stroke(AppColors.primaryText, lineWidth: 4)
-                                    )
-                                
-                                VStack(alignment: .leading, spacing: 12) {
-                                    Text("Steps")
-                                        .font(.headline)
-                                        .fontWeight(.black)
-                                        .foregroundColor(AppColors.primaryText)
-                                    
-                                    Text(desc)
-                                        .font(.body)
-                                        .foregroundColor(AppColors.primaryText)
-                                        .lineSpacing(8)
-                                }
-                                .padding()
-                            }
-                            .padding(.horizontal, 16)
-                        }
-                    }
-                    .padding(.vertical, 20)
-                }
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        isPresented = false
-                    }
-                    .foregroundColor(AppColors.accent)
-                }
-            }
-        }
-    }
-}
-
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(currentView: .constant("home"))
+        HomeView(currentView: .constant("home"), selectedRecipeId: .constant(nil))
     }
 }
