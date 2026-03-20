@@ -89,3 +89,16 @@
 "common.cancel" = "Cancel";
 "common.done" = "Done";
 "common.loading" = "Loading...";
+"common.unknown" = "Unknown";
+"common.unknown.recipe" = "Unknown Recipe";
+
+// MARK: - Language Names
+"settings.language.chinese" = "简体中文";
+"settings.language.english" = "English";
+
+// MARK: - Error Messages
+"error.recipe.not.found" = "Recipe not found";
+
+// MARK: - API Prompts
+"api.system.prompt" = "You are a professional chef. Generate a detailed recipe based on the ingredients provided by the user. Please return strictly in the following JSON format without any other text:\n{\"dishName\": \"Dish Name\", \"ingredients\": [\"Ingredient 1\", \"Ingredient 2\", ...], \"steps\": [\"Step 1\", \"Step 2\", ...]}";
+"api.user.prompt" = "Please generate a recipe using the following ingredients: %@";

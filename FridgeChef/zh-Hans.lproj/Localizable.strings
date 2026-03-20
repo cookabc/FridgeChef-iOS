@@ -89,3 +89,16 @@
 "common.cancel" = "取消";
 "common.done" = "完成";
 "common.loading" = "加载中...";
+"common.unknown" = "未知";
+"common.unknown.recipe" = "未知食谱";
+
+// MARK: - Language Names
+"settings.language.chinese" = "简体中文";
+"settings.language.english" = "English";
+
+// MARK: - Error Messages
+"error.recipe.not.found" = "食谱未找到";
+
+// MARK: - API Prompts
+"api.system.prompt" = "你是一个专业的厨师，根据用户提供的食材，生成一个详细的食谱。请严格按照以下 JSON 格式返回，不要包含任何其他文字：\n{\"dishName\": \"菜名\", \"ingredients\": [\"食材1\", \"食材2\", ...], \"steps\": [\"步骤1\", \"步骤2\", ...]}";
+"api.user.prompt" = "请使用以下食材生成一个食谱：%@";
