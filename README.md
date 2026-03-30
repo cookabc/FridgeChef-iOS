@@ -50,12 +50,14 @@ FridgeChef (冰箱大厨) is an AI-powered recipe generator iOS app that helps y
 ### Prerequisites
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/FridgeChef.git
 cd FridgeChef
 ```
 
 2. Open the project in Xcode:
+
 ```bash
 open FridgeChef.xcodeproj
 ```
@@ -127,10 +129,12 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 ## Localization
 
 The app currently supports:
+
 - 🇺🇸 English
 - 🇨🇳 Simplified Chinese (简体中文)
 
 To add a new language:
+
 1. Create a new `.lproj` folder in `FridgeChef/`
 2. Copy `Localizable.strings` from `en.lproj/`
 3. Translate all strings

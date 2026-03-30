@@ -5,6 +5,7 @@ Thank you for your interest in contributing to FridgeChef! We welcome contributi
 ## Code of Conduct
 
 This project adheres to a code of conduct. By participating, you are expected to uphold this code:
+
 - Be respectful and inclusive
 - Welcome newcomers
 - Focus on constructive feedback
@@ -104,6 +105,7 @@ Text("Home")
 ```
 
 Add new strings to both:
+
 - `FridgeChef/en.lproj/Localizable.strings`
 - `FridgeChef/zh-Hans.lproj/Localizable.strings`
 
@@ -138,6 +140,7 @@ NeoPopButton(title: "Save") { action }
 ### Unit Tests
 
 Write tests for:
+
 - Business logic
 - Data transformations
 - API service methods
@@ -147,12 +150,14 @@ Run tests with: `Cmd + U` in Xcode
 ### UI Tests
 
 Write UI tests for:
+
 - Critical user flows
 - Navigation paths
 
 ### Manual Testing
 
 Test your changes on:
+
 - iPhone (various sizes)
 - Both light and dark modes
 - Different iOS versions if possible
@@ -166,6 +171,7 @@ Test your changes on:
 ## Questions?
 
 Feel free to open an issue for:
+
 - Questions about the codebase
 - Clarification on contributing guidelines
 - Discussion of potential features

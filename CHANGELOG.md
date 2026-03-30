@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - Initial release of FridgeChef
 - AI-powered recipe generation based on available ingredients
 - Recipe history with Core Data persistence
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Quick select for common ingredients
 
 ### Features
+
 - **Home Screen**: View recipe statistics and recent recipes
 - **Input Screen**: Enter ingredients manually or use quick select
 - **Result Screen**: Display AI-generated recipes with ingredients and steps
@@ -26,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Recipe Detail**: View complete recipe with step-by-step instructions
 
 ### Technical
+
 - SwiftUI for modern declarative UI
 - Core Data for local data persistence
 - MVVM architecture
@@ -36,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2024-XX-XX
 
 ### Added
+
 - First stable release
 - Complete recipe generation flow
 - Settings and customization
@@ -52,20 +56,26 @@ When creating a new release, use this template:
 ## [X.Y.Z] - YYYY-MM-DD
 
 ### Added
+
 - New features
 
 ### Changed
+
 - Changes in existing functionality
 
 ### Deprecated
+
 - Soon-to-be removed features
 
 ### Removed
+
 - Now removed features
 
 ### Fixed
+
 - Bug fixes
 
 ### Security
+
 - Security improvements
 ```

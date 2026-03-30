@@ -1,209 +1,297 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>冰箱大厨 - FridgeChef</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #FFFDF5;
-        }
-        
-        .neo-pop-card {
-            border: 3px solid black;
-            box-shadow: 4px 4px 0px black;
-            border-radius: 24px;
-            transition: transform 0.2s ease;
-        }
-        
-        .neo-pop-card:active {
-            transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px black;
-        }
-        
-        .neo-pop-button {
-            border: 3px solid black;
-            box-shadow: 4px 4px 0px black;
-            border-radius: 16px;
-            transition: transform 0.2s ease;
-        }
-        
-        .neo-pop-button:active {
-            transform: translate(4px, 4px);
-            box-shadow: 0px 0px 0px black;
-        }
-        
-        .neo-pop-input {
-            border: 3px solid black;
-            border-radius: 16px;
-            box-shadow: 4px 4px 0px black;
-        }
-        
-        .neo-pop-tag {
-            border: 3px solid black;
-            border-radius: 20px;
-            box-shadow: 2px 2px 0px black;
-            transition: transform 0.2s ease;
-        }
-        
-        .neo-pop-tag:active {
-            transform: translate(2px, 2px);
-            box-shadow: 0px 0px 0px black;
-        }
-        
-        .neo-pop-tag.selected {
-            background-color: #CCFF00;
-        }
-        
-        .iphone-frame {
-            width: 393px;
-            height: 852px;
-            border: 12px solid black;
-            border-radius: 48px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        .iphone-notch {
-            width: 160px;
-            height: 30px;
-            background-color: black;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            z-index: 10;
-        }
-        
-        .app-content {
-            height: 100%;
-            overflow-y: auto;
-            padding-top: 30px;
-        }
-        
-        .page {
-            height: 100%;
-            display: none;
-        }
-        
-        .page.active {
-            display: block;
-        }
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #fffdf5;
+      }
+
+      .neo-pop-card {
+        border: 3px solid black;
+        box-shadow: 4px 4px 0px black;
+        border-radius: 24px;
+        transition: transform 0.2s ease;
+      }
+
+      .neo-pop-card:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0px 0px 0px black;
+      }
+
+      .neo-pop-button {
+        border: 3px solid black;
+        box-shadow: 4px 4px 0px black;
+        border-radius: 16px;
+        transition: transform 0.2s ease;
+      }
+
+      .neo-pop-button:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0px 0px 0px black;
+      }
+
+      .neo-pop-input {
+        border: 3px solid black;
+        border-radius: 16px;
+        box-shadow: 4px 4px 0px black;
+      }
+
+      .neo-pop-tag {
+        border: 3px solid black;
+        border-radius: 20px;
+        box-shadow: 2px 2px 0px black;
+        transition: transform 0.2s ease;
+      }
+
+      .neo-pop-tag:active {
+        transform: translate(2px, 2px);
+        box-shadow: 0px 0px 0px black;
+      }
+
+      .neo-pop-tag.selected {
+        background-color: #ccff00;
+      }
+
+      .iphone-frame {
+        width: 393px;
+        height: 852px;
+        border: 12px solid black;
+        border-radius: 48px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .iphone-notch {
+        width: 160px;
+        height: 30px;
+        background-color: black;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        z-index: 10;
+      }
+
+      .app-content {
+        height: 100%;
+        overflow-y: auto;
+        padding-top: 30px;
+      }
+
+      .page {
+        height: 100%;
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+      }
     </style>
-</head>
-<body class="flex items-center justify-center min-h-screen">
+  </head>
+  <body class="flex items-center justify-center min-h-screen">
     <div class="iphone-frame">
-        <div class="iphone-notch"></div>
-        <div class="app-content">
-            <!-- 首页 -->
-            <div id="homePage" class="page active p-5">
-                <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-2xl font-bold">冰箱大厨</h1>
-                    <div class="w-10 h-10 neo-pop-card bg-white flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                    </div>
-                </div>
-                
-                <!-- Bento Grid 布局 -->
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- 开始烹饪卡片 -->
-                    <div class="col-span-2 neo-pop-card bg-[#CCFF00] p-6 flex flex-col items-center justify-center" onclick="showPage('inputPage')">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                        <h2 class="text-xl font-bold text-center">开始烹饪</h2>
-                        <p class="text-sm text-center mt-2">输入冰箱食材，获取 AI 食谱</p>
-                    </div>
-                    
-                    <!-- 历史食谱卡片 1 -->
-                    <div class="neo-pop-card bg-white p-4">
-                        <div class="h-24 bg-gray-200 rounded-lg mb-3"></div>
-                        <h3 class="font-bold">番茄炒蛋</h3>
-                        <p class="text-xs text-gray-600">番茄、鸡蛋、葱花</p>
-                    </div>
-                    
-                    <!-- 历史食谱卡片 2 -->
-                    <div class="neo-pop-card bg-white p-4">
-                        <div class="h-24 bg-gray-200 rounded-lg mb-3"></div>
-                        <h3 class="font-bold">青椒肉丝</h3>
-                        <p class="text-xs text-gray-600">青椒、猪肉、生姜</p>
-                    </div>
-                    
-                    <!-- 历史食谱卡片 3 -->
-                    <div class="neo-pop-card bg-white p-4">
-                        <div class="h-24 bg-gray-200 rounded-lg mb-3"></div>
-                        <h3 class="font-bold">蒜蓉西兰花</h3>
-                        <p class="text-xs text-gray-600">西兰花、大蒜、橄榄油</p>
-                    </div>
-                    
-                    <!-- 历史食谱卡片 4 -->
-                    <div class="neo-pop-card bg-white p-4">
-                        <div class="h-24 bg-gray-200 rounded-lg mb-3"></div>
-                        <h3 class="font-bold">蛋炒饭</h3>
-                        <p class="text-xs text-gray-600">米饭、鸡蛋、胡萝卜</p>
-                    </div>
-                </div>
+      <div class="iphone-notch"></div>
+      <div class="app-content">
+        <!-- 首页 -->
+        <div id="homePage" class="page active p-5">
+          <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">冰箱大厨</h1>
+            <div
+              class="w-10 h-10 neo-pop-card bg-white flex items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                />
+              </svg>
             </div>
-            
-            <!-- 输入页 -->
-            <div id="inputPage" class="page p-5">
-                <div class="flex items-center mb-6">
-                    <div class="w-10 h-10 neo-pop-card bg-white flex items-center justify-center mr-4" onclick="showPage('homePage')">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </div>
-                    <h1 class="text-2xl font-bold">输入食材</h1>
-                </div>
-                
-                <div class="mb-6">
-                    <label class="block text-sm font-bold mb-2">冰箱里有什么？</label>
-                    <input type="text" placeholder="输入食材，用逗号分隔" class="neo-pop-input w-full p-4">
-                </div>
-                
-                <div class="mb-8">
-                    <label class="block text-sm font-bold mb-3">常用食材</label>
-                    <div class="flex flex-wrap gap-3">
-                        <div class="neo-pop-tag px-4 py-2 text-sm" onclick="toggleTag(this)">鸡蛋</div>
-                        <div class="neo-pop-tag px-4 py-2 text-sm" onclick="toggleTag(this)">番茄</div>
-                        <div class="neo-pop-tag px-4 py-2 text-sm" onclick="toggleTag(this)">洋葱</div>
-                        <div class="neo-pop-tag px-4 py-2 text-sm" onclick="toggleTag(this)">青椒</div>
-                        <div class="neo-pop-tag px-4 py-2 text-sm" onclick="toggleTag(this)">猪肉</div>
-                        <div class="neo-pop-tag px-4 py-2 text-sm" onclick="toggleTag(this)">鸡肉</div>
-                        <div class="neo-pop-tag px-4 py-2 text-sm" onclick="toggleTag(this)">米饭</div>
-                        <div class="neo-pop-tag px-4 py-2 text-sm" onclick="toggleTag(this)">面条</div>
-                    </div>
-                </div>
-                
-                <div class="neo-pop-button bg-[#CCFF00] p-4 flex items-center justify-center" onclick="alert('生成食谱中...')">
-                    <h2 class="text-xl font-bold">生成食谱</h2>
-                </div>
+          </div>
+
+          <!-- Bento Grid 布局 -->
+          <div class="grid grid-cols-2 gap-4">
+            <!-- 开始烹饪卡片 -->
+            <div
+              class="col-span-2 neo-pop-card bg-[#CCFF00] p-6 flex flex-col items-center justify-center"
+              onclick="showPage('inputPage')"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-16 w-16 mb-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
+              </svg>
+              <h2 class="text-xl font-bold text-center">开始烹饪</h2>
+              <p class="text-sm text-center mt-2">输入冰箱食材，获取 AI 食谱</p>
             </div>
+
+            <!-- 历史食谱卡片 1 -->
+            <div class="neo-pop-card bg-white p-4">
+              <div class="h-24 bg-gray-200 rounded-lg mb-3"></div>
+              <h3 class="font-bold">番茄炒蛋</h3>
+              <p class="text-xs text-gray-600">番茄、鸡蛋、葱花</p>
+            </div>
+
+            <!-- 历史食谱卡片 2 -->
+            <div class="neo-pop-card bg-white p-4">
+              <div class="h-24 bg-gray-200 rounded-lg mb-3"></div>
+              <h3 class="font-bold">青椒肉丝</h3>
+              <p class="text-xs text-gray-600">青椒、猪肉、生姜</p>
+            </div>
+
+            <!-- 历史食谱卡片 3 -->
+            <div class="neo-pop-card bg-white p-4">
+              <div class="h-24 bg-gray-200 rounded-lg mb-3"></div>
+              <h3 class="font-bold">蒜蓉西兰花</h3>
+              <p class="text-xs text-gray-600">西兰花、大蒜、橄榄油</p>
+            </div>
+
+            <!-- 历史食谱卡片 4 -->
+            <div class="neo-pop-card bg-white p-4">
+              <div class="h-24 bg-gray-200 rounded-lg mb-3"></div>
+              <h3 class="font-bold">蛋炒饭</h3>
+              <p class="text-xs text-gray-600">米饭、鸡蛋、胡萝卜</p>
+            </div>
+          </div>
         </div>
+
+        <!-- 输入页 -->
+        <div id="inputPage" class="page p-5">
+          <div class="flex items-center mb-6">
+            <div
+              class="w-10 h-10 neo-pop-card bg-white flex items-center justify-center mr-4"
+              onclick="showPage('homePage')"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </div>
+            <h1 class="text-2xl font-bold">输入食材</h1>
+          </div>
+
+          <div class="mb-6">
+            <label class="block text-sm font-bold mb-2">冰箱里有什么？</label>
+            <input
+              type="text"
+              placeholder="输入食材，用逗号分隔"
+              class="neo-pop-input w-full p-4"
+            />
+          </div>
+
+          <div class="mb-8">
+            <label class="block text-sm font-bold mb-3">常用食材</label>
+            <div class="flex flex-wrap gap-3">
+              <div
+                class="neo-pop-tag px-4 py-2 text-sm"
+                onclick="toggleTag(this)"
+              >
+                鸡蛋
+              </div>
+              <div
+                class="neo-pop-tag px-4 py-2 text-sm"
+                onclick="toggleTag(this)"
+              >
+                番茄
+              </div>
+              <div
+                class="neo-pop-tag px-4 py-2 text-sm"
+                onclick="toggleTag(this)"
+              >
+                洋葱
+              </div>
+              <div
+                class="neo-pop-tag px-4 py-2 text-sm"
+                onclick="toggleTag(this)"
+              >
+                青椒
+              </div>
+              <div
+                class="neo-pop-tag px-4 py-2 text-sm"
+                onclick="toggleTag(this)"
+              >
+                猪肉
+              </div>
+              <div
+                class="neo-pop-tag px-4 py-2 text-sm"
+                onclick="toggleTag(this)"
+              >
+                鸡肉
+              </div>
+              <div
+                class="neo-pop-tag px-4 py-2 text-sm"
+                onclick="toggleTag(this)"
+              >
+                米饭
+              </div>
+              <div
+                class="neo-pop-tag px-4 py-2 text-sm"
+                onclick="toggleTag(this)"
+              >
+                面条
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="neo-pop-button bg-[#CCFF00] p-4 flex items-center justify-center"
+            onclick="alert('生成食谱中...')"
+          >
+            <h2 class="text-xl font-bold">生成食谱</h2>
+          </div>
+        </div>
+      </div>
     </div>
-    
+
     <script>
-        function showPage(pageId) {
-            // 隐藏所有页面
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            // 显示目标页面
-            document.getElementById(pageId).classList.add('active');
-        }
-        
-        function toggleTag(element) {
-            element.classList.toggle('selected');
-        }
+      function showPage(pageId) {
+        // 隐藏所有页面
+        document.querySelectorAll(".page").forEach((page) => {
+          page.classList.remove("active");
+        });
+        // 显示目标页面
+        document.getElementById(pageId).classList.add("active");
+      }
+
+      function toggleTag(element) {
+        element.classList.toggle("selected");
+      }
     </script>
-</body>
+  </body>
 </html>
